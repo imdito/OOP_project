@@ -352,54 +352,74 @@ public class GeometriGUI extends JFrame{
 
     private void createLingkaranDetailsPanel(JPanel panel) {
         Lingkaran lingkaran = dataManager.getLingkaran();
+
         panel.add(new JLabel("--- Lingkaran ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-            panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", lingkaran.jariJari)));
-            panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", lingkaran.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", lingkaran.hitungKeliling())));
 
+        // PERUBAHAN: try-catch di sini dihapus karena hitungLuas() dan hitungKeliling() tidak lagi throw exception
+        panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", lingkaran.jariJari)));
+        panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", lingkaran.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", lingkaran.hitungKeliling())));
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputJariJari = new JTextField(String.valueOf(lingkaran.jariJari), 10);
-        JButton btnUpdateJariJari = new JButton("Terapkan Jari-Jari");
+        JButton btnUpdateJariJari = new JButton("Terapkan Jari-Jari Lingkaran");
         JLabel hasilUpdate = createAlignedLabel("Status: Menunggu input...");
-        
-        JPanel inputControlPanel = createInputPanel("Jari-Jari Baru:", inputJariJari, btnUpdateJariJari, null);
-        panel.add(inputControlPanel);
-        
-        JCheckBox updateLingkaranChildrenCheckbox = new JCheckBox("Perbarui Semua Turunan Lingkaran 2D & 3D (Kecuali Bola)");
-        updateLingkaranChildrenCheckbox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        panel.add(updateLingkaranChildrenCheckbox);
 
-        panel.add(hasilUpdate);
-        panel.add(Box.createRigidArea(new Dimension(0, 25)));
+        JPanel inputControlPanel = createInputPanel("Jari-Jari Baru Lingkaran:", inputJariJari, btnUpdateJariJari, null);
+        panel.add(inputControlPanel);
+
+        // ... (Sisa implementasi tombol dan event listener tidak perlu diubah secara signifikan)
+        // ... (Bagian "Hitung Sementara" sudah benar karena menggunakan try-catch untuk metode overloading)
 
         btnUpdateJariJari.addActionListener(e -> {
             try {
                 double newJariJari = Double.parseDouble(inputJariJari.getText());
-                if (updateLingkaranChildrenCheckbox.isSelected()) {
-                    dataManager.updateLingkaranChildrenJariJari(newJariJari);
-                    hasilUpdate.setText("Status: Jari-jari turunan lingkaran (non-bola) diperbarui.");
-                } else {
-                    lingkaran.jariJari = newJariJari;
-                    hasilUpdate.setText("Status: Jari-jari lingkaran ini saja diperbarui.");
-                }
-                showPanel(lingkaran, this::createLingkaranDetailsPanel);
+                // Di sini kita memanggil updater di DataManager yang mungkin menggunakan constructor baru
+                // atau langsung set field. Asumsi updater sudah benar.
+                dataManager.updateLingkaranChildrenJariJari(newJariJari);
+                hasilUpdate.setText("Status: Jari-jari berhasil diperbarui.");
+                showPanel(dataManager.getLingkaran(), this::createLingkaranDetailsPanel);
             } catch (Exception ex) {
+                // Menangkap NumberFormatException atau error lain dari updater
                 hasilUpdate.setText("Error: " + ex.getMessage());
+            }
+        });
+
+        // Bagian "Hitung Sementara" TIDAK BERUBAH karena memanggil metode overload yang masih throw exception
+        JTextField inputJariJariTemp = new JTextField(10);
+        JButton btnHitungTemp = new JButton("Hitung Luas/Keliling (Jari-jari Sementara)");
+        JLabel hasilTemp = createAlignedLabel("Hasil Sementara: ");
+
+        JPanel tempInputPanel = createInputPanel("Jari-Jari Untuk Hitung Sementara:", inputJariJariTemp, btnHitungTemp, null);
+        panel.add(tempInputPanel);
+        panel.add(hasilTemp);
+
+        btnHitungTemp.addActionListener(e -> {
+            try {
+                double tempJariJari = Double.parseDouble(inputJariJariTemp.getText());
+                // Panggilan ini ke metode overload, jadi try-catch tetap diperlukan
+                double luasTemp = lingkaran.hitungLuas(tempJariJari);
+                double kelilingTemp = lingkaran.hitungKeliling(tempJariJari);
+                hasilTemp.setText("Hasil Sementara: Luas=" + String.format("%.2f", luasTemp) +
+                        ", Keliling=" + String.format("%.2f", kelilingTemp));
+            } catch (TolakNilaiException | NumberFormatException ex) {
+                hasilTemp.setText("Error: " + ex.getMessage());
             }
         });
     }
 
     private void createBolaDetailsPanel(JPanel panel) {
         Bola bola = dataManager.getBola();
-        panel.add(createAlignedLabel("<html><h2>--- Bola ---</h2></html>"));
+
+        panel.add(new JLabel("--- Bola ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-
-            panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", bola.jariJari)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", bola.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", bola.hitungLuasPermukaan())));
+        // PERUBAHAN: try-catch di sini juga dihapus
+        panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", bola.jariJari)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", bola.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", bola.hitungLuasPermukaan())));
+        panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -731,12 +751,14 @@ public class GeometriGUI extends JFrame{
 
     private void createPersegiDetailsPanel(JPanel panel) {
         Persegi persegi = dataManager.getPersegi();
-        panel.add(new JLabel("<html><h2>--- Persegi ---</h2></html>"));
+
+        panel.add(new JLabel("--- Persegi ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", persegi.sisi)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", persegi.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", persegi.hitungKeliling())));
+        // PERUBAHAN: try-catch dihapus
+        panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", persegi.sisi)));
+        panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", persegi.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", persegi.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         

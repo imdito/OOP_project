@@ -5,6 +5,9 @@ import geometri.Benda3D.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import javax.swing.JOptionPane; // Diperlukan untuk menampilkan error
+import java.util.ArrayList;
+import java.util.List;
 
 public class GeometriDataManager {
     private static GeometriDataManager instance;
@@ -51,6 +54,7 @@ public class GeometriDataManager {
 
     private GeometriDataManager() {
         // Inisialisasi default awal
+        try {
         double defaultJariJari2D = 7.0;
         double defaultJariJariBola = 5.0;
         double defaultSisiPersegi = 8.0;
@@ -87,181 +91,54 @@ public class GeometriDataManager {
         double defaultTinggiJuringBola = 2.0;    // Harus < 2 * defaultJariJariBola
 
         // Inisialisasi objek-objek Lingkaran dan turunannya (non-Bola)
-        try {
+
             lingkaran = new Lingkaran(defaultJariJari2D);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             juringLingkaran = new JuringLingkaran(defaultJariJari2D);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        juringLingkaran.sudutBusurDerajat = 90.0;
-        try {
+
+            juringLingkaran.sudutBusurDerajat = 90.0;
+
             temberengLingkaran = new TemberengLingkaran(defaultJariJari2D, 3.0); // Tinggi tembereng adalah sudut pusat pada konstruktor Anda
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             kerucut = new Kerucut(defaultJariJari2D, defaultTinggiKerucut);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             tabung = new Tabung(defaultJariJari2D, defaultTinggiTabung);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
 
-        // Objek 3D yang berawal dari Bola
-        try {
             bola = new Bola(defaultJariJariBola);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             cincinBola = new CincinBola(defaultJariJariBola, 10.0, 5.0, 10.0); // Jari-jari bola, tinggi cincin, jari-jari alas 1 & 2
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             juringBola = new JuringBola(defaultJariJariBola, defaultTinggiJuringBola);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             temberengBola = new TemberengBola(defaultJariJariBola, defaultTinggiTemberengBola);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
 
-        // Inisialisasi objek-objek Persegi dan turunannya
-        try {
             persegi = new Persegi(defaultSisiPersegi);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             limasPersegi = new LimasPersegi(defaultSisiPersegi, defaultTinggiLimas);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             prismaPersegi = new PrismaPersegi(defaultSisiPersegi); // Kubus (tinggi = sisi)
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
 
-        // Inisialisasi objek-objek Persegi Panjang dan turunannya
-        try {
             persegiPanjang = new PersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+
             limasPersegiPanjang = new LimasPersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang, defaultTinggiLimas);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             prismaPersegiPanjang = new PrismaPersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Inisialisasi objek-objek Segitiga dan turunannya
-        try {
             segitiga = new Segitiga(defaultAlasSegitiga, defaultTinggiSegitiga, defaultSisiSegitigaA, defaultSisiSegitigaB, defaultSisiSegitigaC);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             limasSegitiga = new LimasSegitiga(defaultAlasSegitiga, defaultTinggiSegitiga, defaultSisiSegitigaA, defaultSisiSegitigaB, defaultSisiSegitigaC, defaultTinggiLimas, 12.0, 12.0, 12.0); // Tinggi sisi tegak contoh
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             prismaSegitiga = new PrismaSegitiga(defaultAlasSegitiga, defaultTinggiSegitiga, defaultSisiSegitigaA, defaultSisiSegitigaB, defaultSisiSegitigaC, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Inisialisasi objek-objek Belah Ketupat dan turunannya
-        try {
             belahKetupat = new BelahKetupat(defaultDiagonal1BK, defaultDiagonal2BK, defaultSisiBK);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             limasBelahKetupat = new LimasBelahKetupat(defaultDiagonal1BK, defaultDiagonal2BK, defaultSisiBK, defaultTinggiLimas);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             prismaBelahKetupat = new PrismaBelahKetupat(defaultDiagonal1BK, defaultDiagonal2BK, defaultSisiBK, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Inisialisasi objek-objek Jajar Genjang dan turunannya
-        try {
             jajarGenjang = new JajarGenjang(defaultAlasJG, defaultTinggiJG, defaultSisiMiringJG);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             limasJajarGenjang = new LimasJajarGenjang(defaultAlasJG, defaultTinggiJG, defaultSisiMiringJG, defaultTinggiLimas, 9.0, 9.0); // Tinggi sisi tegak contoh
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             prismaJajarGenjang = new PrismaJajarGenjang(defaultAlasJG, defaultTinggiJG, defaultSisiMiringJG, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Inisialisasi objek-objek Layang-Layang dan turunannya
-        try {
             layangLayang = new LayangLayang(defaultDiagonal1LL, defaultDiagonal2LL, defaultSisiPendekLL, defaultSisiPanjangLL);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             limasLayangLayang = new LimasLayangLayang(defaultDiagonal1LL, defaultDiagonal2LL, defaultSisiPendekLL, defaultSisiPanjangLL, defaultTinggiLimas, 10.0, 14.0); // Tinggi sisi tegak contoh
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
             prismaLayangLayang = new PrismaLayangLayang(defaultDiagonal1LL, defaultDiagonal2LL, defaultSisiPendekLL, defaultSisiPanjangLL, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        // Inisialisasi objek-objek Trapesium dan turunannya
-        try {
             trapesium = new Trapesium(defaultSisiAtasTrapesium, defaultSisiBawahTrapesium, defaultTinggiTrapesium, defaultSisiKiriTrapesium, defaultSisiKananTrapesium);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            limasTrapesium = new LimasTrapesium(defaultSisiAtasTrapesium, defaultSisiBawahTrapesium, defaultTinggiTrapesium, defaultSisiKiriTrapesium, defaultSisiKananTrapesium, defaultTinggiLimas, 6.0, 11.0, 7.0, 7.0); // Tinggi sisi tegak contoh
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-        try {
+            limasTrapesium = new LimasTrapesium(defaultSisiAtasTrapesium, defaultSisiBawahTrapesium, defaultTinggiTrapesium, defaultSisiKiriTrapesium, defaultSisiKananTrapesium, defaultTinggiLimas, 6.0, 11.0, 7.0, 7.0); // Tinggi sisi tegak contoh} catch (TolakNilaiException e) {
             prismaTrapesium = new PrismaTrapesium(defaultSisiAtasTrapesium, defaultSisiBawahTrapesium, defaultTinggiTrapesium, defaultSisiKiriTrapesium, defaultSisiKananTrapesium, defaultTinggiPrisma);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
-
-        try {
             kerucutTerpancung = new KerucutTerpancung(10.0, 5.0, 8.0);
-        } catch (TolakNilaiException e) {
-            throw new RuntimeException(e);
-        }
 
-        // Inisialisasi daftar objek yang jari-jarinya akan diupdate secara global oleh Lingkaran (non-Bola)
         updatableFromLingkaran = new ArrayList<>();
         updatableFromLingkaran.add(lingkaran);
         updatableFromLingkaran.add(juringLingkaran);
@@ -269,12 +146,22 @@ public class GeometriDataManager {
         updatableFromLingkaran.add(kerucut);
         updatableFromLingkaran.add(tabung);
 
-        // Inisialisasi daftar objek yang jari-jarinya akan diupdate secara global oleh Bola
         updatableFromBola = new ArrayList<>();
         updatableFromBola.add(bola);
         updatableFromBola.add(cincinBola);
         updatableFromBola.add(juringBola);
         updatableFromBola.add(temberengBola);
+
+        } catch (TolakNilaiException e) {
+            // Jika terjadi error saat inisialisasi dengan nilai default, aplikasi tidak bisa lanjut.
+            JOptionPane.showMessageDialog(
+                    null,
+                    "Terjadi error fatal saat inisialisasi data default:\n" + e.getMessage() + "\nAplikasi akan ditutup.",
+                    "Error Inisialisasi",
+                    JOptionPane.ERROR_MESSAGE
+            );
+            System.exit(1); // Tutup aplikasi
+        }
     }
 
     public static GeometriDataManager getInstance() {

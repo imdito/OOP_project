@@ -354,13 +354,10 @@ public class GeometriGUI extends JFrame{
         Lingkaran lingkaran = dataManager.getLingkaran();
         panel.add(new JLabel("--- Lingkaran ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
             panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", lingkaran.jariJari)));
             panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", lingkaran.hitungLuas())));
             panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", lingkaran.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputJariJari = new JTextField(String.valueOf(lingkaran.jariJari), 10);
@@ -399,13 +396,11 @@ public class GeometriGUI extends JFrame{
         panel.add(createAlignedLabel("<html><h2>--- Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", bola.jariJari)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", bola.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", bola.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputJariJariBola = new JTextField(String.valueOf(bola.jariJari), 10);
@@ -442,7 +437,7 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Cincin Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", cincinBola.jariJari)));
             panel.add(createAlignedLabel("Tinggi Cincin: " + String.format("%.2f", cincinBola.tinggiCincin)));
             panel.add(createAlignedLabel("Jari-Jari Alas 1: " + String.format("%.2f", cincinBola.jariJariAlas1)));
@@ -450,9 +445,7 @@ public class GeometriGUI extends JFrame{
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", cincinBola.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", cincinBola.hitungLuasPermukaanLengkung())));
             panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", cincinBola.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         panel.add(createAlignedLabel("Perbarui Dimensi Cincin Bola:"));
@@ -499,15 +492,13 @@ public class GeometriGUI extends JFrame{
         JuringBola juringBola = dataManager.getJuringBola();
         panel.add(new JLabel("<html><h2>--- Juring Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", juringBola.jariJari)));
             panel.add(createAlignedLabel("Tinggi Tembereng Dasar: " + String.format("%.2f", juringBola.tinggiTemberengDasar)));
             panel.add(createAlignedLabel("Jari-Jari Alas Tembereng: " + String.format("%.2f", juringBola.hitungJariJariAlasTembereng())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", juringBola.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", juringBola.hitungLuasPermukaan())));
-        } catch (TolakNilaiException | IllegalArgumentException e) {
-             panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiTemberengDasar = new JTextField(String.valueOf(juringBola.tinggiTemberengDasar), 10);
@@ -534,16 +525,13 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Tembereng Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        try {
             panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", temberengBola.jariJari)));
             panel.add(createAlignedLabel("Tinggi Tembereng: " + String.format("%.2f", temberengBola.getTinggiTembereng())));
             panel.add(createAlignedLabel("Jari-Jari Alas: " + String.format("%.2f", temberengBola.hitungJariJariAlas())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", temberengBola.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", temberengBola.hitungLuasPermukaanLengkung())));
             panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", temberengBola.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiTembereng = new JTextField(String.valueOf(temberengBola.getTinggiTembereng()), 10);
@@ -569,14 +557,12 @@ public class GeometriGUI extends JFrame{
         JuringLingkaran juringLingkaran = dataManager.getJuringLingkaran();
         panel.add(new JLabel("<html><h2>--- Juring Lingkaran ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", juringLingkaran.jariJari)));
             panel.add(createAlignedLabel("Sudut Busur (Derajat): " + String.format("%.2f", juringLingkaran.sudutBusurDerajat)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", juringLingkaran.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", juringLingkaran.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputSudutBusur = new JTextField(String.valueOf(juringLingkaran.sudutBusurDerajat), 10);
@@ -605,14 +591,12 @@ public class GeometriGUI extends JFrame{
         TemberengLingkaran temberengLingkaran = dataManager.getTemberengLingkaran();
         panel.add(new JLabel("<html><h2>--- Tembereng Lingkaran ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", temberengLingkaran.jariJari)));
             panel.add(createAlignedLabel("Sudut Pusat (Derajat): " + String.format("%.2f", temberengLingkaran.getSudutPusatDerajat())));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", temberengLingkaran.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", temberengLingkaran.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputSudutPusat = new JTextField(String.valueOf(temberengLingkaran.getSudutPusatDerajat()), 10);
@@ -641,14 +625,12 @@ public class GeometriGUI extends JFrame{
         Tabung tabung = dataManager.getTabung();
         panel.add(new JLabel("<html><h2>--- Tabung ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", tabung.jariJari)));
             panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", tabung.getTinggi())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", tabung.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", tabung.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputJariJari = new JTextField(String.valueOf(tabung.jariJari), 10);
@@ -677,15 +659,13 @@ public class GeometriGUI extends JFrame{
         Kerucut kerucut = dataManager.getKerucut();
         panel.add(new JLabel("<html><h2>--- Kerucut ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", kerucut.jariJari)));
             panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", kerucut.tinggi)));
             panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kerucut.getGarisPelukis())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kerucut.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kerucut.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputJariJari = new JTextField(String.valueOf(kerucut.jariJari), 10);
@@ -714,16 +694,14 @@ public class GeometriGUI extends JFrame{
         KerucutTerpancung kt = dataManager.getKerucutTerpancung();
         panel.add(new JLabel("<html><h2>--- Kerucut Terpancung ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Jari-Jari Bawah: " + String.format("%.2f", kt.jariJari)));
             panel.add(createAlignedLabel("Jari-Jari Atas: " + String.format("%.2f", kt.jariJariAtas)));
             panel.add(createAlignedLabel("Tinggi Frustum: " + String.format("%.2f", kt.tinggiFrustum)));
             panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kt.hitungGarisPelukis())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kt.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kt.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputJRB = new JTextField(String.valueOf(kt.jariJari), 10);
@@ -755,13 +733,11 @@ public class GeometriGUI extends JFrame{
         Persegi persegi = dataManager.getPersegi();
         panel.add(new JLabel("<html><h2>--- Persegi ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", persegi.sisi)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", persegi.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", persegi.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-             panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputSisi = new JTextField(String.valueOf(persegi.sisi), 10);
@@ -786,14 +762,12 @@ public class GeometriGUI extends JFrame{
         LimasPersegi limasPersegi = dataManager.getLimasPersegi();
         panel.add(new JLabel("<html><h2>--- Limas Persegi ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Sisi Alas (Diwarisi): " + String.format("%.2f", limasPersegi.sisi)));
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", limasPersegi.getTinggiLimas())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", limasPersegi.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", limasPersegi.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputTinggiLimas = new JTextField(String.valueOf(limasPersegi.getTinggiLimas()), 10);
@@ -818,13 +792,11 @@ public class GeometriGUI extends JFrame{
         PrismaPersegi prismaPersegi = dataManager.getPrismaPersegi();
         panel.add(new JLabel("<html><h2>--- Prisma Persegi (Kubus) ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", prismaPersegi.sisi)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", prismaPersegi.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", prismaPersegi.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Untuk memperbarui sisi kubus, gunakan menu 'Persegi (Dasar)'.</i></html>"));
     }
@@ -837,14 +809,12 @@ public class GeometriGUI extends JFrame{
         PersegiPanjang pp = dataManager.getPersegiPanjang();
         panel.add(new JLabel("<html><h2>--- Persegi Panjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
              panel.add(createAlignedLabel("Panjang: " + String.format("%.2f", pp.panjang)));
              panel.add(createAlignedLabel("Lebar: " + String.format("%.2f", pp.lebar)));
              panel.add(createAlignedLabel("Luas: " + String.format("%.2f", pp.hitungLuas())));
              panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", pp.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputPanjang = new JTextField(String.valueOf(pp.panjang), 10);
@@ -873,15 +843,13 @@ public class GeometriGUI extends JFrame{
         LimasPersegiPanjang lpp = dataManager.getLimasPersegiPanjang();
         panel.add(new JLabel("<html><h2>--- Limas Persegi Panjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Panjang Alas (Diwarisi): " + String.format("%.2f", lpp.panjang)));
             panel.add(createAlignedLabel("Lebar Alas (Diwarisi): " + String.format("%.2f", lpp.lebar)));
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lpp.tinggiLimas)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lpp.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lpp.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lpp.tinggiLimas), 10);
@@ -906,15 +874,13 @@ public class GeometriGUI extends JFrame{
         PrismaPersegiPanjang ppp = dataManager.getPrismaPersegiPanjang();
         panel.add(new JLabel("<html><h2>--- Prisma Persegi Panjang (Balok) ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Panjang Alas: " + String.format("%.2f", ppp.panjang)));
             panel.add(createAlignedLabel("Lebar Alas: " + String.format("%.2f", ppp.lebar)));
             panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ppp.tinggiPrisma)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ppp.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ppp.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(ppp.tinggiPrisma), 10);
@@ -939,7 +905,7 @@ public class GeometriGUI extends JFrame{
         Segitiga s = dataManager.getSegitiga();
         panel.add(new JLabel("<html><h2>--- Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Alas (u/ Luas): " + String.format("%.2f", s.alasUntukLuas)));
             panel.add(createAlignedLabel("Tinggi (u/ Luas): " + String.format("%.2f", s.tinggiUntukLuas)));
             panel.add(createAlignedLabel("Sisi A: " + String.format("%.2f", s.sisiA)));
@@ -947,9 +913,7 @@ public class GeometriGUI extends JFrame{
             panel.add(createAlignedLabel("Sisi C: " + String.format("%.2f", s.sisiC)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", s.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", s.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputAlas = new JTextField(String.valueOf(s.alasUntukLuas), 10);
@@ -987,13 +951,11 @@ public class GeometriGUI extends JFrame{
         LimasSegitiga ls = dataManager.getLimasSegitiga();
         panel.add(new JLabel("<html><h2>--- Limas Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ls.getTinggiLimas())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ls.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ls.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Segitiga (Dasar)'.</i></html>"));
     }
@@ -1002,13 +964,11 @@ public class GeometriGUI extends JFrame{
         PrismaSegitiga ps = dataManager.getPrismaSegitiga();
         panel.add(new JLabel("<html><h2>--- Prisma Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ps.getTinggiPrisma())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ps.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ps.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Segitiga (Dasar)'.</i></html>"));
     }
@@ -1020,15 +980,12 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("--- Belah Ketupat ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        try {
             panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", bk.diagonal1)));
             panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", bk.diagonal2)));
             panel.add(createAlignedLabel("Sisi: " + String.format("%.2f", bk.sisi)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", bk.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", bk.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputD1 = new JTextField(String.valueOf(bk.diagonal1), 10);
@@ -1062,13 +1019,11 @@ public class GeometriGUI extends JFrame{
         LimasBelahKetupat lbk = dataManager.getLimasBelahKetupat();
         panel.add(new JLabel("<html><h2>--- Limas Belah Ketupat ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lbk.tinggiLimas)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lbk.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lbk.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lbk.tinggiLimas), 10);
@@ -1096,13 +1051,11 @@ public class GeometriGUI extends JFrame{
         PrismaBelahKetupat pbk = dataManager.getPrismaBelahKetupat();
         panel.add(new JLabel("<html><h2>--- Prisma Belah Ketupat ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pbk.tinggiPrisma)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pbk.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pbk.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(pbk.tinggiPrisma), 10);
@@ -1130,15 +1083,13 @@ public class GeometriGUI extends JFrame{
         JajarGenjang jg = dataManager.getJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Alas: " + String.format("%.2f", jg.alas)));
             panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", jg.tinggi)));
             panel.add(createAlignedLabel("Sisi Miring: " + String.format("%.2f", jg.sisiMiring)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", jg.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", jg.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputAlas = new JTextField(String.valueOf(jg.alas), 10);
@@ -1171,13 +1122,11 @@ public class GeometriGUI extends JFrame{
         LimasJajarGenjang ljg = dataManager.getLimasJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Limas Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ljg.tinggiLimas)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ljg.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ljg.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(ljg.tinggiLimas), 10);
@@ -1205,13 +1154,11 @@ public class GeometriGUI extends JFrame{
         PrismaJajarGenjang pjg = dataManager.getPrismaJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Prisma Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pjg.tinggiPrisma)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pjg.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pjg.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(pjg.tinggiPrisma), 10);
@@ -1239,16 +1186,14 @@ public class GeometriGUI extends JFrame{
         LayangLayang ll = dataManager.getLayangLayang();
         panel.add(new JLabel("<html><h2>--- Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", ll.diagonal1)));
             panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", ll.diagonal2)));
             panel.add(createAlignedLabel("Sisi Pendek: " + String.format("%.2f", ll.sisiPendek)));
             panel.add(createAlignedLabel("Sisi Panjang: " + String.format("%.2f", ll.sisiPanjang)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", ll.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", ll.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         
         JTextField inputD1 = new JTextField(String.valueOf(ll.diagonal1), 10);
@@ -1285,13 +1230,11 @@ public class GeometriGUI extends JFrame{
         LimasLayangLayang lll = dataManager.getLimasLayangLayang();
         panel.add(new JLabel("<html><h2>--- Limas Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lll.getTinggiLimas())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lll.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lll.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lll.getTinggiLimas()), 10);
@@ -1319,16 +1262,14 @@ public class GeometriGUI extends JFrame{
         PrismaLayangLayang pll = dataManager.getPrismaLayangLayang();
         panel.add(new JLabel("<html><h2>--- Prisma Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pll.getTinggiPrisma())));
+
+            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pll.tinggiPrisma)));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pll.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pll.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
-        JTextField inputTinggiPrisma = new JTextField(String.valueOf(pll.getTinggiPrisma()), 10);
+        JTextField inputTinggiPrisma = new JTextField(String.valueOf(pll.tinggiPrisma), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Prisma");
         JLabel status = createAlignedLabel("Status: ");
         
@@ -1353,7 +1294,7 @@ public class GeometriGUI extends JFrame{
         Trapesium t = dataManager.getTrapesium();
         panel.add(new JLabel("<html><h2>--- Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Sisi Atas: " + String.format("%.2f", t.sisiAtas)));
             panel.add(createAlignedLabel("Sisi Bawah: " + String.format("%.2f", t.sisiBawah)));
             panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", t.tinggi)));
@@ -1361,9 +1302,7 @@ public class GeometriGUI extends JFrame{
             panel.add(createAlignedLabel("Sisi Kanan: " + String.format("%.2f", t.sisiKanan)));
             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", t.hitungLuas())));
             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", t.hitungKeliling())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputSisiAtas = new JTextField(String.valueOf(t.sisiAtas), 10);
@@ -1402,13 +1341,11 @@ public class GeometriGUI extends JFrame{
         LimasTrapesium lt = dataManager.getLimasTrapesium();
         panel.add(new JLabel("<html><h2>--- Limas Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lt.getTinggiLimas())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lt.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lt.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lt.getTinggiLimas()), 10);
@@ -1436,13 +1373,11 @@ public class GeometriGUI extends JFrame{
         PrismaTrapesium pt = dataManager.getPrismaTrapesium();
         panel.add(new JLabel("<html><h2>--- Prisma Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
-        try {
+
             panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pt.getTinggiPrisma())));
             panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pt.hitungVolume())));
             panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pt.hitungLuasPermukaan())));
-        } catch (TolakNilaiException e) {
-            panel.add(createAlignedLabel("Error: " + e.getMessage()));
-        }
+
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(pt.getTinggiPrisma()), 10);

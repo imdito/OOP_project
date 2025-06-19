@@ -13,20 +13,21 @@ public class Trapesium extends AbstractGeometriDasar {
     public double luas;
     public double keliling;
 
-    public Trapesium(double sisiAtas, double sisiBawah, double tinggi, double sisiKiri, double sisiKanan){
+    public Trapesium(double sisiAtas, double sisiBawah, double tinggi, double sisiKiri, double sisiKanan) throws TolakNilaiException {
+
         super("Trapesium");
-        this.sisiAtas = sisiAtas;     // 'this' diperlukan
-        this.sisiBawah = sisiBawah;   // 'this' diperlukan
-        this.tinggi = tinggi;         // 'this' diperlukan
-        this.sisiKiri = sisiKiri;     // 'this' diperlukan
-        this.sisiKanan = sisiKanan;   // 'this' diperlukan
+        if (sisiAtas <= 0 || sisiBawah <= 0 || tinggi <= 0 || sisiKiri <= 0 || sisiKanan <= 0) {
+            throw new TolakNilaiException("Sisi atas, bawah, tinggi, kiri, dan kanan harus bernilai positif.");
+        }
+        this.sisiAtas = sisiAtas;
+        this.sisiBawah = sisiBawah;
+        this.tinggi = tinggi;
+        this.sisiKiri = sisiKiri;
+        this.sisiKanan = sisiKanan;
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
-        if (sisiAtas <= 0 || sisiBawah <= 0 || tinggi <= 0) {
-            throw new TolakNilaiException("Sisi atas, bawah, dan tinggi harus bernilai positif.");
-        }
+    public double hitungLuas()  {
         luas = 0.5 * (sisiAtas + sisiBawah) * tinggi;
         return luas;
     }
@@ -41,10 +42,7 @@ public class Trapesium extends AbstractGeometriDasar {
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (sisiAtas <= 0 || sisiBawah <= 0 || sisiKiri <= 0 || sisiKanan <= 0) {
-            throw new TolakNilaiException("Sisi atas, bawah, kiri, dan kanan harus bernilai positif.");
-        }
+    public double hitungKeliling()   {
         keliling = sisiAtas + sisiBawah + sisiKiri + sisiKanan;
         return keliling;
     }

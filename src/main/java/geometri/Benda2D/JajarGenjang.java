@@ -11,18 +11,19 @@ public class JajarGenjang extends AbstractGeometriDasar {
     public double luas;
     public double keliling;
 
-    public JajarGenjang(double alas, double tinggi, double sisiMiring)   {
+    public JajarGenjang(double alas, double tinggi, double sisiMiring) throws TolakNilaiException {
         super("Jajar Genjang");
+        if (alas <= 0 || tinggi <= 0 || sisiMiring <= 0
+                || alas <= sisiMiring) { // Validasi tambahan untuk sisi miring
+            throw new TolakNilaiException("Alas, tinggi, dan sisi miring harus bernilai positif dan sisi miring harus lebih kecil dari alas.");
+        }
         this.alas = alas;         // 'this' diperlukan
         this.tinggi = tinggi;     // 'this' diperlukan
         this.sisiMiring = sisiMiring; // 'this' diperlukan
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
-        if (alas <= 0 || tinggi <= 0) {
-            throw new TolakNilaiException("Alas dan tinggi harus bernilai positif.");
-        }
+    public double hitungLuas()   {
         luas = alas * tinggi;
         return luas;
     }
@@ -36,10 +37,8 @@ public class JajarGenjang extends AbstractGeometriDasar {
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (alas <= 0 || sisiMiring <= 0) {
-            throw new TolakNilaiException("Alas dan sisi miring harus bernilai positif.");
-        }
+    public double hitungKeliling()  {
+
         keliling = 2 * (alas + sisiMiring);
         return keliling;
     }

@@ -9,16 +9,16 @@ public class Persegi extends AbstractGeometriDasar implements Runnable {
     public double luas;
     public double keliling;
 
-    public Persegi(double sisi) {
+    public Persegi(double sisi) throws TolakNilaiException {
         super("Persegi");
+        if (sisi <= 0) {
+            throw new TolakNilaiException("Sisi harus bernilai positif.");
+        }
         this.sisi = sisi; // 'this' diperlukan di sini karena parameter sama dengan nama field
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
-        if (sisi <= 0) {
-            throw new TolakNilaiException("Sisi harus bernilai positif.");
-        }
+    public double hitungLuas()  {
         luas = sisi * sisi;
         return luas;
     }
@@ -32,15 +32,12 @@ public class Persegi extends AbstractGeometriDasar implements Runnable {
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (sisi <= 0) {
-            throw new TolakNilaiException("Sisi harus bernilai positif.");
-        }
+    public double hitungKeliling()  {
         keliling = 4 * sisi;
         return keliling;
     }
 
-    public double hitungKeliling(double sisi) throws TolakNilaiException {
+    public double hitungKeliling(double sisi) throws TolakNilaiException  {
         if (sisi <= 0) {
             throw new TolakNilaiException("Sisi harus bernilai positif.");
         }

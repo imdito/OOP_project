@@ -13,8 +13,11 @@ public class Segitiga extends AbstractGeometriDasar {
     public double luas;
     public double keliling;
 
-    public Segitiga(double alas, double tinggi, double sisiA, double sisiB, double sisiC) {
+    public Segitiga(double alas, double tinggi, double sisiA, double sisiB, double sisiC) throws TolakNilaiException {
         super("Segitiga");
+        if (alas <= 0 || tinggi <= 0 || sisiA <= 0 || sisiB <= 0 || sisiC <= 0) {
+            throw new TolakNilaiException("Alas, tinggi, dan semua sisi harus bernilai positif.");
+        }
         this.alasUntukLuas = alas; // 'this' diperlukan
         this.tinggiUntukLuas = tinggi; // 'this' diperlukan
         this.sisiA = sisiA; // 'this' diperlukan
@@ -23,15 +26,12 @@ public class Segitiga extends AbstractGeometriDasar {
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
-        if (alasUntukLuas <= 0 || tinggiUntukLuas <= 0) {
-            throw new TolakNilaiException("Alas dan tinggi harus bernilai positif.");
-        }
+    public double hitungLuas() {
         luas = 0.5 * alasUntukLuas * tinggiUntukLuas;
         return luas;
     }
 
-    public double hitungLuas(double alas, double tinggi) throws TolakNilaiException {
+    public double hitungLuas(double alas, double tinggi) throws TolakNilaiException  {
         if (alas <= 0 || tinggi <= 0) {
             throw new TolakNilaiException("Alas dan tinggi harus bernilai positif.");
         }
@@ -40,10 +40,7 @@ public class Segitiga extends AbstractGeometriDasar {
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (sisiA <= 0 || sisiB <= 0 || sisiC <= 0) {
-            throw new TolakNilaiException("Sisi A, B, dan C harus bernilai positif.");
-        }
+    public double hitungKeliling()  {
         keliling = sisiA + sisiB + sisiC;
         return keliling;
     }

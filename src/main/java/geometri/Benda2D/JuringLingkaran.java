@@ -6,18 +6,19 @@ public class JuringLingkaran extends Lingkaran implements Runnable{
 
     public double sudutBusurDerajat; // Dimensi spesifik juring
 
-    public JuringLingkaran(double jariJari){
+    public JuringLingkaran(double jariJari) throws TolakNilaiException {
         super(jariJari);
+        if (jariJari <= 0) {
+            throw new TolakNilaiException("Jari-jari harus bernilai positif.");
+        }
         this.sudutBusurDerajat = sudutBusurDerajat; // 'this' diperlukan
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
+    public double hitungLuas()   {
         // Menggunakan super.jariJari (atau cukup jariJari karena protected)
         // Menyimpan hasil ke field 'luas' yang diwarisi dari Lingkaran, tapi dengan nilai Juring
-        if (sudutBusurDerajat <= 0 || sudutBusurDerajat > 360) {
-            throw new TolakNilaiException("Sudut busur harus bernilai positif dan tidak lebih dari 360 derajat.");
-        }
+
         luas = (sudutBusurDerajat / 360.0) * (Math.PI * jariJari * jariJari);
         return luas;
     }
@@ -39,7 +40,10 @@ public class JuringLingkaran extends Lingkaran implements Runnable{
         return keliling;
     }
 
-    public double hitungKeliling(double sudutBusurDerajat) {
+    public double hitungKeliling(double sudutBusurDerajat) throws TolakNilaiException {
+        if (sudutBusurDerajat <= 0 || sudutBusurDerajat > 360) {
+            throw new TolakNilaiException("Sudut busur harus bernilai positif dan tidak lebih dari 360 derajat.");
+        }
         double panjangBusur = (sudutBusurDerajat / 360.0) * (2 * Math.PI * jariJari);
         keliling = panjangBusur + (2 * jariJari);
         return keliling;

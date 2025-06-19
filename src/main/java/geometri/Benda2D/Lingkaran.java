@@ -12,18 +12,21 @@ public class Lingkaran extends AbstractGeometriDasar implements Runnable{
     public double luas;
     public double keliling;
 
-    public Lingkaran(double jariJari) {
+    public Lingkaran(double jariJari) throws TolakNilaiException {
         super("Lingkaran");
+        if (jariJari <= 0) {
+            throw new TolakNilaiException("Jari-jari harus bernilai positif.");
+        }
         this.jariJari = jariJari;
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
+    public double hitungLuas() {
         luas =  Math.PI * jariJari * jariJari; // 
         return luas;
     }
 
-    public double hitungLuas(double jariJari) throws TolakNilaiException {
+    public double hitungLuas(double jariJari) throws TolakNilaiException  {
         if (jariJari <= 0) {
             throw new TolakNilaiException("Jari-jari harus bernilai positif.");
         }
@@ -32,10 +35,7 @@ public class Lingkaran extends AbstractGeometriDasar implements Runnable{
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (jariJari <= 0) {
-            throw new TolakNilaiException("Jari-jari harus bernilai positif.");
-        }
+    public double hitungKeliling()   {
         keliling =  2 * Math.PI * jariJari; // 
         return keliling;
     }

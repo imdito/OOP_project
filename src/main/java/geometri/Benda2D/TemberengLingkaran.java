@@ -12,16 +12,18 @@ public class TemberengLingkaran extends Lingkaran implements Runnable{
 
     public double sudutPusatDerajat;
 
-    public TemberengLingkaran(double jariJari, double sudutPusatDerajat)  {
+    public TemberengLingkaran(double jariJari, double sudutPusatDerajat) throws TolakNilaiException {
+
         super(jariJari);
+        if (jariJari <= 0) {
+            throw new TolakNilaiException("Jari-jari harus bernilai positif.");
+        }
         this.sudutPusatDerajat = sudutPusatDerajat;
     }
 
     @Override
-    public double hitungLuas() throws TolakNilaiException {
-        if (this.sudutPusatDerajat <= 0 || this.sudutPusatDerajat >= 360) {
-            throw new TolakNilaiException("Sudut pusat harus lebih dari 0 dan kurang dari 360 derajat.");
-        }
+    public double hitungLuas()  {
+
         double sudutRadian = Math.toRadians(this.sudutPusatDerajat);
         double luasJuring = 0.5 * this.jariJari * this.jariJari * sudutRadian;
         double luasSegitiga = 0.5 * this.jariJari * this.jariJari * Math.sin(sudutRadian);
@@ -30,10 +32,8 @@ public class TemberengLingkaran extends Lingkaran implements Runnable{
     }
 
     @Override
-    public double hitungKeliling() throws TolakNilaiException {
-        if (this.sudutPusatDerajat <= 0 || this.sudutPusatDerajat >= 360) {
-            throw new TolakNilaiException("Sudut pusat harus lebih dari 0 dan kurang dari 360 derajat.");
-        }
+    public double hitungKeliling()   {
+
         double sudutRadian = Math.toRadians(this.sudutPusatDerajat);
         double panjangBusur = this.jariJari * sudutRadian;
         double panjangTaliBusur = 2 * this.jariJari * Math.sin(sudutRadian / 2.0);

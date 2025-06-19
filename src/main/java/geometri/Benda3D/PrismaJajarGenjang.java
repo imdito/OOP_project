@@ -13,23 +13,20 @@ public class PrismaJajarGenjang extends JajarGenjang {
     private double volume;
     private double luasPermukaan;
 
-    public PrismaJajarGenjang(double alasAlas, double tinggiAlas, double sisiMiringAlas, double tinggiPrisma) {
+    public PrismaJajarGenjang(double alasAlas, double tinggiAlas, double sisiMiringAlas, double tinggiPrisma) throws TolakNilaiException {
         super(alasAlas, tinggiAlas, sisiMiringAlas);
+        if (tinggiPrisma <= 0) {
+            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
+        }
         this.tinggiPrisma = tinggiPrisma;
     }
 
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungVolume()  {
         this.volume = super.hitungLuas() * this.tinggiPrisma;
         return this.volume;
     }
 
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan()   {
         double luasAlasJG = super.hitungLuas();
         double kelilingAlasJG = super.hitungKeliling();
         double luasSelubung = kelilingAlasJG * this.tinggiPrisma;
@@ -57,9 +54,6 @@ public class PrismaJajarGenjang extends JajarGenjang {
         return this.luasPermukaan;
     }
 
-    public double getTinggiPrisma() {
-        return tinggiPrisma;
-    }
     public double getVolume() {
         return volume;
     }

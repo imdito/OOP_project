@@ -9,15 +9,15 @@ public class Tabung extends Lingkaran {
     protected double volume;
     protected double luasPermukaanTabung;
 
-    public Tabung(double jariJari, double tinggi) {
+    public Tabung(double jariJari, double tinggi) throws TolakNilaiException {
         super(jariJari);
+        if (jariJari <= 0 || tinggi <= 0) {
+            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
+        }
         this.tinggi = tinggi;
     }
 
-    public double hitungVolume() throws TolakNilaiException {
-        if (super.jariJari <= 0 || tinggi <= 0) {
-            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
-        }
+    public double hitungVolume()   {
         volume = super.hitungLuas() * tinggi;
         return volume;
     }
@@ -30,10 +30,8 @@ public class Tabung extends Lingkaran {
         return volume;
     }
 
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (super.jariJari <= 0 || tinggi <= 0) {
-            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan()   {
+
         double luasAlasTabung = super.hitungLuas();
         double kelilingAlasTabung = super.hitungKeliling();
         double luasSelimut = kelilingAlasTabung * tinggi;

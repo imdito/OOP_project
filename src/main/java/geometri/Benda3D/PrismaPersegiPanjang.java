@@ -13,15 +13,15 @@ public class PrismaPersegiPanjang extends PersegiPanjang {
     private double volume;
     private double luasPermukaan;
 
-    public PrismaPersegiPanjang(double panjangAlas, double lebarAlas, double tinggiPrisma)  {
+    public PrismaPersegiPanjang(double panjangAlas, double lebarAlas, double tinggiPrisma) throws TolakNilaiException {
         super(panjangAlas, lebarAlas);
+        if (tinggiPrisma <= 0) {
+            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
+        }
         this.tinggiPrisma = tinggiPrisma;
     }
 
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungVolume()  {
         this.volume = super.hitungLuas() * this.tinggiPrisma;
         return this.volume;
     }
@@ -30,10 +30,8 @@ public class PrismaPersegiPanjang extends PersegiPanjang {
      * Menghitung luas permukaan prisma (balok) berdasarkan state objek.
      * L = 2 * (pl + pt + lt)
      */
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
+
         double luasAlasBalok = super.hitungLuas();
         double kelilingAlasBalok = super.hitungKeliling();
         double luasSelubung = kelilingAlasBalok * this.tinggiPrisma;

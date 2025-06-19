@@ -14,8 +14,11 @@ public class PrismaTrapesium extends Trapesium {
     private double luasPermukaan;
 
     public PrismaTrapesium(double sisiAtasAlas, double sisiBawahAlas, double tinggiAlasTrapesium,
-                           double sisiKiriAlas, double sisiKananAlas, double tinggiPrisma) {
+                           double sisiKiriAlas, double sisiKananAlas, double tinggiPrisma) throws TolakNilaiException {
         super(sisiAtasAlas, sisiBawahAlas, tinggiAlasTrapesium, sisiKiriAlas, sisiKananAlas);
+        if (tinggiPrisma <= 0) {
+            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
+        }
         this.tinggiPrisma = tinggiPrisma;
     }
 
@@ -23,10 +26,7 @@ public class PrismaTrapesium extends Trapesium {
      * Menghitung volume prisma berdasarkan state objek.
      * V = Luas Alas * Tinggi Prisma
      */
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungVolume()   {
         this.volume = super.hitungLuas() * this.tinggiPrisma;
         return this.volume;
     }
@@ -35,10 +35,7 @@ public class PrismaTrapesium extends Trapesium {
      * Menghitung luas permukaan prisma berdasarkan state objek.
      * L = (2 * Luas Alas) + (Keliling Alas * Tinggi Prisma)
      */
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan()   {
         double luasAlasTrapesium = super.hitungLuas();
         double kelilingAlasTrapesium = super.hitungKeliling();
         double luasSelubung = kelilingAlasTrapesium * this.tinggiPrisma;
@@ -47,8 +44,8 @@ public class PrismaTrapesium extends Trapesium {
     }
 
     public double hitungVolume(double sisiAtasAlas, double sisiBawahAlas, double tinggiAlas, double tinggiPrisma) throws TolakNilaiException {
-        if (tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
+        if (sisiAtasAlas <= 0 || sisiBawahAlas <= 0 || tinggiAlas <= 0 || tinggiPrisma <= 0) {
+            throw new TolakNilaiException("Sisi atas, sisi bawah, tinggi alas, dan tinggi prisma harus bernilai positif.");
         }
         double luasAlas = 0.5 * (sisiAtasAlas + sisiBawahAlas) * tinggiAlas;
         this.volume = luasAlas * tinggiPrisma;
@@ -57,8 +54,8 @@ public class PrismaTrapesium extends Trapesium {
 
     public double hitungLuasPermukaan(double sisiAtasAlas, double sisiBawahAlas, double tinggiAlas,
                                       double sisiKiriAlas, double sisiKananAlas, double tinggiPrisma) throws TolakNilaiException {
-        if (tinggiPrisma <= 0) {
-            throw new TolakNilaiException("Tinggi prisma harus bernilai positif.");
+        if (sisiAtasAlas <= 0 || sisiBawahAlas <= 0 || tinggiAlas <= 0 || sisiKiriAlas <= 0 || sisiKananAlas <= 0 || tinggiPrisma <= 0) {
+            throw new TolakNilaiException("Sisi atas, sisi bawah, tinggi alas, sisi kiri, sisi kanan, dan tinggi prisma harus bernilai positif.");
         }
         double luasAlas = 0.5 * (sisiAtasAlas + sisiBawahAlas) * tinggiAlas;
         double kelilingAlas = sisiAtasAlas + sisiBawahAlas + sisiKiriAlas + sisiKananAlas;

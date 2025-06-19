@@ -15,8 +15,11 @@ public class TemberengBola extends Bola {
     private double jariJariAlas;
     private double luasPermukaanLengkung;
 
-    public TemberengBola(double jariJariBola, double tinggiTembereng) {
+    public TemberengBola(double jariJariBola, double tinggiTembereng) throws TolakNilaiException {
         super(jariJariBola);
+        if (tinggiTembereng <= 0) {
+            throw new TolakNilaiException("Tinggi tembereng dan jari-jari bola harus bernilai positif.");
+        }
         this.tinggiTembereng = tinggiTembereng;
     }
 
@@ -24,11 +27,7 @@ public class TemberengBola extends Bola {
      * Menghitung dan mengembalikan jari-jari alas tembereng.
      * Metode ini diubah namanya dari get... menjadi hitung... untuk kejelasan.
      */
-    public double hitungJariJariAlas() throws TolakNilaiException {
-        if (tinggiTembereng <= 0 || jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari bola harus bernilai positif.");
-        }
-        // Menggunakan field public secara langsung
+    public double hitungJariJariAlas() {
         this.jariJariAlas = Math.sqrt(this.tinggiTembereng * (2 * this.jariJari - this.tinggiTembereng));
         return this.jariJariAlas;
     }
@@ -38,10 +37,7 @@ public class TemberengBola extends Bola {
      * V = (1/3) * pi * h^2 * (3R - h)
      */
     @Override
-    public double hitungVolume() throws TolakNilaiException {
-        if (tinggiTembereng <= 0 || jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari bola harus bernilai positif.");
-        }
+    public double hitungVolume()   {
         // Menggunakan field 'volume' yang diwarisi
         volume = (1.0 / 3.0) * Math.PI * Math.pow(tinggiTembereng, 2) * (3 * jariJariAlas - tinggiTembereng);
         return volume;
@@ -50,10 +46,7 @@ public class TemberengBola extends Bola {
     /**
      * Menghitung luas permukaan lengkung (selimut) tembereng berdasarkan state objek.
      */
-    public double hitungLuasPermukaanLengkung() throws TolakNilaiException {
-        if (tinggiTembereng <= 0 || jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari bola harus bernilai positif.");
-        }
+    public double hitungLuasPermukaanLengkung()   {
         luasPermukaanLengkung = 2 * Math.PI * jariJariAlas * tinggiTembereng;
         return luasPermukaanLengkung;
     }
@@ -63,10 +56,7 @@ public class TemberengBola extends Bola {
      * L = Luas Selimut Lengkung + Luas Alas
      */
     @Override
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (tinggiTembereng <= 0 || jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari bola harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan()   {
         double luasLengkung = this.hitungLuasPermukaanLengkung();
 
         double luasAlasTembereng = 0;

@@ -17,8 +17,11 @@ public class LimasPersegiPanjang extends PersegiPanjang {
 
     // Field 'luas' dan 'keliling' untuk alas diwarisi dari PersegiPanjang.
 
-    public LimasPersegiPanjang(double panjangAlas, double lebarAlas, double tinggiLimas) throws IllegalArgumentException{
+    public LimasPersegiPanjang(double panjangAlas, double lebarAlas, double tinggiLimas) throws TolakNilaiException {
         super(panjangAlas, lebarAlas);
+        if (panjangAlas <= 0 || lebarAlas <= 0) {
+            throw new IllegalArgumentException("Panjang dan lebar alas harus bernilai positif.");
+        }
         if (tinggiLimas <= 0) {
             throw new IllegalArgumentException("Tinggi limas harus bernilai positif.");
         }
@@ -28,10 +31,7 @@ public class LimasPersegiPanjang extends PersegiPanjang {
     /**
      * Menghitung volume limas berdasarkan state objek.
      */
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0) {
-            throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
-        }
+    public double hitungVolume() {
         // Memanggil hitungLuas() dari superclass untuk mendapatkan luas alas
         this.volume = (1.0 / 3.0) * super.hitungLuas() * this.tinggiLimas;
         return this.volume;
@@ -40,11 +40,7 @@ public class LimasPersegiPanjang extends PersegiPanjang {
     /**
      * Menghitung luas selubung (total luas sisi tegak) limas.
      */
-    public double hitungLuasSelubung() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0 || this.panjang <= 0 || this.lebar <= 0) {
-            throw new TolakNilaiException("Tinggi limas, panjang, dan lebar harus bernilai positif.");
-        }
-
+    public double hitungLuasSelubung() {
         double ts1 = Math.sqrt(Math.pow(this.tinggiLimas, 2) + Math.pow(this.lebar / 2.0, 2));
         double luasSisiTegak1 = 2 * (0.5 * this.panjang * ts1);
 
@@ -59,10 +55,7 @@ public class LimasPersegiPanjang extends PersegiPanjang {
      * Menghitung luas permukaan total limas.
      * L = Luas Alas + Luas Selubung
      */
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0 || this.panjang <= 0 || this.lebar <= 0) {
-            throw new TolakNilaiException("Tinggi limas, panjang, dan lebar harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasAlasLimas = super.hitungLuas();
         double luasSelubungLimas = this.hitungLuasSelubung(); // Memanggil metode langsung
         this.luasPermukaan = luasAlasLimas + luasSelubungLimas;

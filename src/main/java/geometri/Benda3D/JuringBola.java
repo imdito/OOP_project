@@ -12,8 +12,11 @@ public class JuringBola extends Bola {
     public double tinggiTemberengDasar;
     protected double jariJariAlasTembereng;
 
-    public JuringBola(double jariJariBola, double tinggiTemberengDasar) {
+    public JuringBola(double jariJariBola, double tinggiTemberengDasar) throws TolakNilaiException {
         super(jariJariBola);
+        if (tinggiTemberengDasar <= 0 || jariJariBola <= 0) {
+            throw new TolakNilaiException("Tinggi tembereng dan jari-jari harus bernilai positif.");
+        }
         this.tinggiTemberengDasar = tinggiTemberengDasar;
     }
 
@@ -21,10 +24,7 @@ public class JuringBola extends Bola {
      * Menghitung dan mengembalikan jari-jari alas tembereng yang membentuk juring.
      * Metode ini memiliki efek samping, yaitu menyimpan hasilnya ke field.
      */
-    public double hitungJariJariAlasTembereng() throws IllegalArgumentException {
-        if (this.tinggiTemberengDasar <= 0 || this.jariJari <= 0) {
-            throw new IllegalArgumentException("Tinggi tembereng dan jari-jari harus bernilai positif.");
-        }
+    public double hitungJariJariAlasTembereng() {
         this.jariJariAlasTembereng = Math.sqrt(this.tinggiTemberengDasar * (2 * this.jariJari - this.tinggiTemberengDasar));
         return this.jariJariAlasTembereng;
     }
@@ -34,10 +34,7 @@ public class JuringBola extends Bola {
      * V = (2/3) * pi * R^2 * h
      */
     @Override
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiTemberengDasar <= 0 || this.jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari harus bernilai positif.");
-        }
+    public double hitungVolume() {
         this.volume = (2.0 / 3.0) * Math.PI * Math.pow(this.jariJari, 2) * this.tinggiTemberengDasar;
         return this.volume;
     }
@@ -47,10 +44,7 @@ public class JuringBola extends Bola {
      * L = Luas Tembereng + Luas Selimut Kerucut
      */
     @Override
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiTemberengDasar <= 0 || this.jariJari <= 0) {
-            throw new TolakNilaiException("Tinggi tembereng dan jari-jari harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasLengkungTembereng = 2 * Math.PI * this.jariJari * this.tinggiTemberengDasar;
 
         // Hitung luas selimut kerucut di dalamnya

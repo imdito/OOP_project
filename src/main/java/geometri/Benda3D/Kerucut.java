@@ -10,10 +10,10 @@ public class Kerucut extends Lingkaran {
     public double volume;
     public double luasPermukaanKerucut;
 
-    public Kerucut(double jariJari, double tinggi) {
+    public Kerucut(double jariJari, double tinggi) throws TolakNilaiException {
         super(jariJari);
         if (jariJari <= 0 || tinggi <= 0) {
-            throw new IllegalArgumentException("Jari-jari dan tinggi harus lebih besar dari nol.");
+            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
         }
         this.tinggi = tinggi;
     }
@@ -23,10 +23,7 @@ public class Kerucut extends Lingkaran {
         return garisPelukisKerucut;
     }
 
-    public double hitungVolume() throws TolakNilaiException {
-        if (tinggi <= 0) {
-            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
-        }
+    public double hitungVolume() {
         volume = (1.0 / 3.0) * super.hitungLuas() * tinggi;
         return volume;
     }
@@ -40,10 +37,7 @@ public class Kerucut extends Lingkaran {
         return volume;
     }
 
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (tinggi <= 0) {
-            throw new TolakNilaiException("Jari-jari dan tinggi harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasAlasKerucut = super.hitungLuas();
         double s = getGarisPelukis();
         double luasSelimut = Math.PI * jariJari * s;

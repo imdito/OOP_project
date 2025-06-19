@@ -21,9 +21,13 @@ public class LimasLayangLayang extends LayangLayang {
      * Konstruktor lengkap untuk kalkulasi volume dan luas permukaan.
      */
     public LimasLayangLayang(double diagonal1Alas, double diagonal2Alas, double sisiPendekAlas, double sisiPanjangAlas,
-                             double tinggiLimas, double tinggiSisiTegakPendek, double tinggiSisiTegakPanjang)   {
+                             double tinggiLimas, double tinggiSisiTegakPendek, double tinggiSisiTegakPanjang) throws TolakNilaiException {
 
         super(diagonal1Alas, diagonal2Alas, sisiPendekAlas, sisiPanjangAlas);
+        if (diagonal1Alas <= 0 || diagonal2Alas <= 0 || sisiPendekAlas <= 0 || sisiPanjangAlas <= 0 ||
+            tinggiLimas <= 0 || tinggiSisiTegakPendek <= 0 || tinggiSisiTegakPanjang <= 0) {
+            throw new TolakNilaiException("Semua dimensi harus bernilai positif.");
+        }
         this.tinggiLimas = tinggiLimas;
         this.tinggiSisiTegakPendek = tinggiSisiTegakPendek;
         this.tinggiSisiTegakPanjang = tinggiSisiTegakPanjang;
@@ -32,10 +36,7 @@ public class LimasLayangLayang extends LayangLayang {
     /**
      * Menghitung volume limas berdasarkan state objek.
      */
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0) {
-            throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
-        }
+    public double hitungVolume() {
         // Memanggil hitungLuas() dari superclass untuk mendapatkan luas alas
         this.volume = (1.0 / 3.0) * super.hitungLuas() * this.tinggiLimas;
         return this.volume;
@@ -44,10 +45,7 @@ public class LimasLayangLayang extends LayangLayang {
     /**
      * Menghitung luas selubung limas berdasarkan state objek.
      */
-    public double hitungLuasSelubung() throws TolakNilaiException {
-        if (this.tinggiSisiTegakPendek <= 0 || this.tinggiSisiTegakPanjang <= 0) {
-            throw new TolakNilaiException("Tinggi sisi tegak pendek dan panjang harus bernilai positif.");
-        }
+    public double hitungLuasSelubung() {
         // Menggunakan field public secara langsung
         double luasTegakPendek = 2 * (0.5 * this.sisiPendek * this.tinggiSisiTegakPendek);
         double luasTegakPanjang = 2 * (0.5 * this.sisiPanjang * this.tinggiSisiTegakPanjang);
@@ -60,10 +58,7 @@ public class LimasLayangLayang extends LayangLayang {
      * L = Luas Alas + Luas Selubung
      */
 
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0 || this.tinggiSisiTegakPendek <= 0 || this.tinggiSisiTegakPanjang <= 0) {
-            throw new TolakNilaiException("Tinggi limas, tinggi sisi tegak pendek, dan tinggi sisi tegak panjang harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasAlasLimas = super.hitungLuas();
         double luasSelubungLimas = this.hitungLuasSelubung();
         luasPermukaan = luasAlasLimas + luasSelubungLimas;

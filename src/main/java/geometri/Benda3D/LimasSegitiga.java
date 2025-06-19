@@ -23,8 +23,11 @@ public class LimasSegitiga extends Segitiga {
      */
     public LimasSegitiga(double alasSegitigaAlas, double tinggiSegitigaAlas, double sisiA_alas,
                          double sisiB_alas, double sisiC_alas, double tinggiLimas,
-                         double tinggiSisiTegakA, double tinggiSisiTegakB, double tinggiSisiTegakC) throws IllegalArgumentException {
+                         double tinggiSisiTegakA, double tinggiSisiTegakB, double tinggiSisiTegakC) throws TolakNilaiException {
         super(alasSegitigaAlas, tinggiSegitigaAlas, sisiA_alas, sisiB_alas, sisiC_alas);
+        if (alasSegitigaAlas <= 0 || tinggiSegitigaAlas <= 0 || sisiA_alas <= 0 || sisiB_alas <= 0 || sisiC_alas <= 0) {
+            throw new IllegalArgumentException("Alas segitiga, tinggi segitiga, dan sisi-sisi alas harus bernilai positif.");
+        }
         if (tinggiLimas <= 0 || tinggiSisiTegakA <= 0 || tinggiSisiTegakB <= 0 || tinggiSisiTegakC <= 0) {
             throw new IllegalArgumentException("Tinggi limas dan tinggi sisi tegak harus bernilai positif.");
         }
@@ -37,10 +40,7 @@ public class LimasSegitiga extends Segitiga {
     /**
      * Menghitung volume limas berdasarkan state objek.
      */
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0) {
-            throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
-        }
+    public double hitungVolume() {
         this.volume = (1.0 / 3.0) * super.hitungLuas() * this.tinggiLimas;
         return this.volume;
     }
@@ -48,10 +48,7 @@ public class LimasSegitiga extends Segitiga {
     /**
      * Menghitung luas selubung limas berdasarkan state objek.
      */
-    public double hitungLuasSelubung() throws TolakNilaiException {
-        if (this.tinggiSisiTegakA <= 0 || this.tinggiSisiTegakB <= 0 || this.tinggiSisiTegakC <= 0) {
-            throw new TolakNilaiException("Tinggi sisi tegak harus bernilai positif.");
-        }
+    public double hitungLuasSelubung() {
         // Menggunakan field public secara langsung
         double luasTegakA = 0.5 * this.sisiA * this.tinggiSisiTegakA;
         double luasTegakB = 0.5 * this.sisiB * this.tinggiSisiTegakB;
@@ -63,10 +60,7 @@ public class LimasSegitiga extends Segitiga {
     /**
      * Menghitung luas permukaan total limas berdasarkan state objek.
      */
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0 || this.tinggiSisiTegakA <= 0 || this.tinggiSisiTegakB <= 0 || this.tinggiSisiTegakC <= 0) {
-            throw new TolakNilaiException("Tinggi limas dan tinggi sisi tegak harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasAlasLimas = super.hitungLuas();
         double luasSelubungLimas = this.hitungLuasSelubung();
         this.luasPermukaan = luasAlasLimas + luasSelubungLimas;

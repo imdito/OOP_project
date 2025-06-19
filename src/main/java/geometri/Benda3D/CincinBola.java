@@ -14,8 +14,11 @@ public class CincinBola extends Bola {
 
     // Field 'volume' dan 'luasPermukaanBola' diwarisi dari kelas Bola
 
-    public CincinBola(double jariJariBola, double tinggiCincin, double jariJariAlas1, double jariJariAlas2) {
+    public CincinBola(double jariJariBola, double tinggiCincin, double jariJariAlas1, double jariJariAlas2) throws TolakNilaiException {
         super(jariJariBola);
+        if (tinggiCincin <= 0 || jariJariAlas1 <= 0 || jariJariAlas2 <= 0) {
+            throw new TolakNilaiException("Tinggi cincin dan jari-jari alas harus bernilai positif.");
+        }
 
         this.tinggiCincin = tinggiCincin;
         this.jariJariAlas1 = jariJariAlas1;
@@ -27,10 +30,7 @@ public class CincinBola extends Bola {
      * Hasilnya disimpan di field 'volume' yang diwarisi.
      */
     @Override
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiCincin <= 0 || this.jariJariAlas1 <= 0 || this.jariJariAlas2 <= 0) {
-            throw new TolakNilaiException("Tinggi cincin dan jari-jari alas harus bernilai positif.");
-        }
+    public double hitungVolume()  {
         // Menggunakan field yang diwarisi 'volume'
         this.volume = (1.0 / 6.0) * Math.PI * this.tinggiCincin * (3 * Math.pow(this.jariJariAlas1, 2) + 3 * Math.pow(this.jariJariAlas2, 2) + Math.pow(this.tinggiCincin, 2));
         return this.volume;
@@ -49,10 +49,7 @@ public class CincinBola extends Bola {
      * Hasilnya disimpan di field 'luasPermukaanBola' yang diwarisi.
      */
     @Override
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiCincin <= 0 || this.jariJariAlas1 <= 0 || this.jariJariAlas2 <= 0) {
-            throw new TolakNilaiException("Tinggi cincin dan jari-jari alas harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasLengkung = this.hitungLuasPermukaanLengkung();
         double luasAlas1 = Math.PI * Math.pow(this.jariJariAlas1, 2);
         double luasAlas2 = Math.PI * Math.pow(this.jariJariAlas2, 2);

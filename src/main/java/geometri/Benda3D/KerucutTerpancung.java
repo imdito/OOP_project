@@ -15,11 +15,14 @@ public class KerucutTerpancung extends Kerucut {
     // Field 'garisPelukisKerucut', 'volume', dan 'luasPermukaanKerucut'
     // sudah diwarisi (inherited) dari kelas Kerucut.
 
-    public KerucutTerpancung(double jariJariBawah, double jariJariAtas, double tinggiFrustum) {
+    public KerucutTerpancung(double jariJariBawah, double jariJariAtas, double tinggiFrustum) throws TolakNilaiException {
         // Catatan: Panggilan super() ini akan mengisi field 'tinggi' di kelas Kerucut
         // dengan nilai 'tinggiFrustum', yang tidak digunakan di kelas ini.
         // Ini adalah konsekuensi dari struktur pewarisan yang ada.
         super(jariJariBawah, tinggiFrustum);
+        if (jariJariBawah <= 0 || jariJariAtas <= 0 || tinggiFrustum <= 0) {
+            throw new TolakNilaiException("Jari-jari bawah, jari-jari atas, dan tinggi frustum harus bernilai positif.");
+        }
         this.jariJariAtas = jariJariAtas;
         this.tinggiFrustum = tinggiFrustum;
     }
@@ -41,10 +44,7 @@ public class KerucutTerpancung extends Kerucut {
      * Rumus: V = (1/3) * pi * h * (R^2 + R*r + r^2)
      */
     @Override
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.jariJari <= 0 || this.jariJariAtas <= 0 || this.tinggiFrustum <= 0) {
-            throw new TolakNilaiException("Jari-jari bawah, jari-jari atas, dan tinggi frustum harus bernilai positif.");
-        }
+    public double hitungVolume() {
         double R = this.jariJari; // Jari-jari bawah
         double r = this.jariJariAtas;
         // Menggunakan field 'volume' yang diwarisi
@@ -57,10 +57,7 @@ public class KerucutTerpancung extends Kerucut {
      * L = Luas Alas Bawah + Luas Alas Atas + Luas Selimut
      */
     @Override
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.jariJari <= 0 || this.jariJariAtas <= 0 || this.tinggiFrustum <= 0) {
-            throw new TolakNilaiException("Jari-jari bawah, jari-jari atas, dan tinggi frustum harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double R = this.jariJari; // Jari-jari bawah
         double r = this.jariJariAtas;
 
@@ -86,7 +83,7 @@ public class KerucutTerpancung extends Kerucut {
         return this.volume;
     }
 
-    public double hitungLuasPermukaan(double jariJariBawah, double jariJariAtas, double tinggiFrustum)  throws TolakNilaiException {
+    public double hitungLuasPermukaan(double jariJariBawah, double jariJariAtas, double tinggiFrustum) throws TolakNilaiException {
         if (jariJariBawah <= 0 || jariJariAtas <= 0 || tinggiFrustum <= 0) {
             throw new TolakNilaiException("Jari-jari bawah, jari-jari atas, dan tinggi frustum harus bernilai positif.");
         }

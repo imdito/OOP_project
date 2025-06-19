@@ -10,15 +10,15 @@ public class LimasPersegi extends Persegi {
     private double luasPermukaanLimas;
 
 
-    public LimasPersegi(double sisiAlas, double tinggiLimas) {
+    public LimasPersegi(double sisiAlas, double tinggiLimas)  throws TolakNilaiException {
         super(sisiAlas);
-        this.tinggiLimas = tinggiLimas;
-    }
-
-    public double hitungVolume() throws TolakNilaiException {
         if (tinggiLimas <= 0) {
             throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
         }
+        this.tinggiLimas = tinggiLimas;
+    }
+
+    public double hitungVolume()  {
         volume = (1.0 / 3.0) * super.hitungLuas() * tinggiLimas;
         return volume;
     }
@@ -31,11 +31,7 @@ public class LimasPersegi extends Persegi {
         return volume;
     }
 
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (tinggiLimas <= 0) {
-            throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
-        }
-
+    public double hitungLuasPermukaan() {
         luasPermukaanLimas = super.hitungLuas() + (2 * super.sisi * tinggiLimas);
         return luasPermukaanLimas;
     }

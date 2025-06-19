@@ -48,12 +48,8 @@ public class Persegi extends AbstractGeometriDasar implements Runnable {
     @Override
     public void run() {
         System.out.println(String.format("[%s] Menghitung Persegi dengan sisi %.2f.", Thread.currentThread().getName(), sisi));
-        try {
-            double l = hitungLuas();
-            double k = hitungKeliling();
-            System.out.println(String.format("[%s] >> Luas: %.2f, Keliling: %.2f.", Thread.currentThread().getName(), l, k));
-        } catch (TolakNilaiException e) {
-            System.err.println(String.format("[%s] GAGAL MENGHITUNG %s: %s", Thread.currentThread().getName(), getNamaBangun(), e.getMessage()));
-        }
+        double l = hitungLuas();
+        double k = hitungKeliling();
+        System.out.println(String.format("[%s] >> Luas: %.2f, Keliling: %.2f.", Thread.currentThread().getName(), l, k));
     }
 }

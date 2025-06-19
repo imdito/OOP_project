@@ -52,13 +52,9 @@ public class JuringLingkaran extends Lingkaran implements Runnable{
     @Override
     public void run() {
         System.out.println(String.format("[%s] Menghitung Juring Lingkaran dengan jari-jari %.2f dan sudut %.2f derajat.", Thread.currentThread().getName(), jariJari, sudutBusurDerajat));
-        try {
-            double l = hitungLuas();
-            double k = hitungKeliling();
-            System.out.println(String.format("[%s] >> Luas: %.2f, Keliling: %.2f.", Thread.currentThread().getName(), l, k));
-        } catch (TolakNilaiException e) {
-            System.err.println(String.format("[%s] GAGAL MENGHITUNG %s: %s", Thread.currentThread().getName(), getNamaBangun(), e.getMessage()));
-        }
+        double l = hitungLuas();
+        double k = hitungKeliling();
+        System.out.println(String.format("[%s] >> Luas: %.2f, Keliling: %.2f.", Thread.currentThread().getName(), l, k));
     }
 
     public double getSudutBusurDerajat() {

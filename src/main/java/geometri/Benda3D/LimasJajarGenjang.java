@@ -21,8 +21,12 @@ public class LimasJajarGenjang extends JajarGenjang {
      * Konstruktor lengkap untuk kalkulasi volume dan luas permukaan.
      */
     public LimasJajarGenjang(double alasAlas, double tinggiAlas, double sisiMiringAlas,
-                             double tinggiLimas, double tinggiSisiTegakAlas, double tinggiSisiTegakMiring)  {
+                             double tinggiLimas, double tinggiSisiTegakAlas, double tinggiSisiTegakMiring) throws TolakNilaiException {
         super(alasAlas, tinggiAlas, sisiMiringAlas);
+        if (alasAlas <= 0 || tinggiAlas <= 0 || sisiMiringAlas <= 0 ||
+            tinggiLimas <= 0 || tinggiSisiTegakAlas <= 0 || tinggiSisiTegakMiring <= 0) {
+            throw new TolakNilaiException("Semua dimensi harus bernilai positif.");
+        }
 
         this.tinggiLimas = tinggiLimas;
         this.tinggiSisiTegakAlas = tinggiSisiTegakAlas;
@@ -32,10 +36,7 @@ public class LimasJajarGenjang extends JajarGenjang {
     /**
      * Menghitung volume limas berdasarkan state objek.
      */
-    public double hitungVolume() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0) {
-            throw new TolakNilaiException("Tinggi limas harus bernilai positif.");
-        }
+    public double hitungVolume() {
         // Memanggil hitungLuas() dari superclass untuk mendapatkan luas alas
         this.volume = (1.0 / 3.0) * super.hitungLuas() * this.tinggiLimas;
         return this.volume;
@@ -44,10 +45,7 @@ public class LimasJajarGenjang extends JajarGenjang {
     /**
      * Menghitung luas selubung limas berdasarkan state objek.
      */
-    public double hitungLuasSelubung() throws TolakNilaiException {
-        if (this.tinggiSisiTegakAlas <= 0 || this.tinggiSisiTegakMiring <= 0) {
-            throw new TolakNilaiException("Tinggi sisi tegak pada alas dan sisi miring harus bernilai positif.");
-        }
+    public double hitungLuasSelubung() {
         double luasTegakPadaAlas = 2 * (0.5 * this.alas * this.tinggiSisiTegakAlas);
         double luasTegakPadaSisiMiring = 2 * (0.5 * this.sisiMiring * this.tinggiSisiTegakMiring);
         this.luasSelubung = luasTegakPadaAlas + luasTegakPadaSisiMiring;
@@ -57,10 +55,7 @@ public class LimasJajarGenjang extends JajarGenjang {
     /**
      * Menghitung luas permukaan total limas berdasarkan state objek.
      */
-    public double hitungLuasPermukaan() throws TolakNilaiException {
-        if (this.tinggiLimas <= 0 || this.tinggiSisiTegakAlas <= 0 || this.tinggiSisiTegakMiring <= 0) {
-            throw new TolakNilaiException("Tinggi limas, tinggi sisi tegak pada alas, dan tinggi sisi tegak pada sisi miring harus bernilai positif.");
-        }
+    public double hitungLuasPermukaan() {
         double luasAlasLimas = super.hitungLuas();
         double luasSelubungLimas = this.hitungLuasSelubung();
         this.luasPermukaan = luasAlasLimas + luasSelubungLimas;

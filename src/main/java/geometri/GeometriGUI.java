@@ -11,6 +11,10 @@ import java.io.PrintStream;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+// >>> PERUBAHAN: Import yang mungkin dibutuhkan untuk demo di dalam GUI
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class GeometriGUI extends JFrame{
 
@@ -38,7 +42,7 @@ public class GeometriGUI extends JFrame{
 
         // --- Menu Lingkaran ---
         JMenu lingkaranMenu = new JMenu("Lingkaran & Turunannya");
-
+        // ... (KODE MENU LINGKARAN TIDAK BERUBAH) ...
         JMenuItem lingkaranItem = new JMenuItem("Lingkaran (Dasar)");
         lingkaranItem.addActionListener(e -> showPanel(dataManager.getLingkaran(), this::createLingkaranDetailsPanel));
         lingkaranMenu.add(lingkaranItem);
@@ -60,7 +64,7 @@ public class GeometriGUI extends JFrame{
         JMenuItem kerucutItem = new JMenuItem("Kerucut");
         kerucutItem.addActionListener(e -> showPanel(dataManager.getKerucut(), this::createKerucutDetailsPanel));
         lingkaranMenu.add(kerucutItem);
-        
+
         JMenuItem kerucutTerpancungItem = new JMenuItem("Kerucut Terpancung");
         kerucutTerpancungItem.addActionListener(e -> showPanel(dataManager.getKerucutTerpancung(), this::createKerucutTerpancungDetailsPanel));
         lingkaranMenu.add(kerucutTerpancungItem);
@@ -89,8 +93,7 @@ public class GeometriGUI extends JFrame{
 
         // --- Menu Poligon ---
         JMenu poligonMenu = new JMenu("Poligon & Turunannya");
-        
-        // Sub-menu untuk setiap poligon
+        // ... (KODE MENU POLIGON TIDAK BERUBAH) ...
         JMenu persegiMenu = new JMenu("Persegi");
         JMenuItem persegiItem = new JMenuItem("Persegi (Dasar)");
         persegiItem.addActionListener(e -> showPanel(dataManager.getPersegi(), this::createPersegiDetailsPanel));
@@ -183,13 +186,104 @@ public class GeometriGUI extends JFrame{
         multithreadItem.addActionListener(e -> showMultithreadingSimulation());
         simulasiMenu.add(multithreadItem);
 
+        // >>> DITAMBAHKAN: Menu item baru untuk demo polimorfisme
+        JMenuItem polymorphItem = new JMenuItem("Demo Polimorfisme");
+        polymorphItem.addActionListener(e -> showPolymorphismDemo());
+        simulasiMenu.add(polymorphItem);
+        // <<< SELESAI DITAMBAHKAN
+
         menuBar.add(simulasiMenu);
 
         setJMenuBar(menuBar);
     }
 
+    // >>> DITAMBAHKAN: Metode baru untuk menampilkan jendela demo polimorfisme
+    private void showPolymorphismDemo() {
+        // Membuat frame baru untuk output demo
+        JFrame demoFrame = new JFrame("Demonstrasi Polimorfisme");
+        JTextArea outputArea = new JTextArea(25, 70);
+        outputArea.setEditable(false);
+        outputArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
+
+        // Memanggil metode yang menghasilkan teks demo dan menampilkannya
+        outputArea.setText(generatePolymorphismDemoText());
+
+        JScrollPane scrollPane = new JScrollPane(outputArea);
+        demoFrame.add(scrollPane);
+        demoFrame.pack();
+        demoFrame.setLocationRelativeTo(this); // Muncul di tengah aplikasi utama
+        demoFrame.setVisible(true);
+    }
+    // <<< SELESAI DITAMBAHKAN
+
+    // >>> DITAMBAHKAN: Metode baru yang berisi logika demo dan mengembalikan String
+    private String generatePolymorphismDemoText() {
+        StringBuilder sb = new StringBuilder();
+
+        try {
+            sb.append("=============================================\n");
+            sb.append("===== MEMULAI DEMONSTRASI POLIMORFISME =====\n");
+            sb.append("=============================================\n");
+
+            // --- Contoh Polimorfisme 1: Satu Objek ---
+            sb.append("\n--- DEMO POLIMORFISME PADA SATU OBJEK ---\n");
+
+            JajarGenjang prismaSebagaiJajarGenjang = new PrismaJajarGenjang(10, 5, 7, 12);
+
+            sb.append("Objek dibuat: JajarGenjang ref = new PrismaJajarGenjang(...)\n\n");
+            sb.append("Nama Bangun (dari referensi): ").append(prismaSebagaiJajarGenjang.getNamaBangun()).append("\n");
+            sb.append("Luas Alas: ").append(String.format("%.2f", prismaSebagaiJajarGenjang.hitungLuas())).append("\n");
+            sb.append("Keliling Alas: ").append(String.format("%.2f", prismaSebagaiJajarGenjang.hitungKeliling())).append("\n");
+
+            if (prismaSebagaiJajarGenjang instanceof PrismaJajarGenjang) {
+                sb.append("\nObjek ini adalah sebuah PrismaJajarGenjang.\n");
+                PrismaJajarGenjang prismaAsli = (PrismaJajarGenjang) prismaSebagaiJajarGenjang;
+                sb.append("Volume Prisma (setelah casting): ").append(String.format("%.2f", prismaAsli.hitungVolume())).append("\n");
+                sb.append("Luas Permukaan Prisma (setelah casting): ").append(String.format("%.2f", prismaAsli.hitungLuasPermukaan())).append("\n");
+            }
+
+            sb.append("\n\n--- DEMO POLIMORFISME DENGAN KOLEKSI (KEKUATAN SEBENARNYA) ---\n");
+
+            List<JajarGenjang> daftarBangunBeralasJajarGenjang = new ArrayList<>();
+            sb.append("\nMembuat List<JajarGenjang> dan menambahkan objek:\n");
+            sb.append("- JajarGenjang\n");
+            sb.append("- LimasJajarGenjang\n");
+            sb.append("- PrismaJajarGenjang\n");
+
+            daftarBangunBeralasJajarGenjang.add(new JajarGenjang(8, 4, 5));
+            daftarBangunBeralasJajarGenjang.add(new LimasJajarGenjang(12, 6, 8, 15, 16, 17));
+            daftarBangunBeralasJajarGenjang.add(new PrismaJajarGenjang(10, 5, 7, 12));
+
+            for (JajarGenjang bangun : daftarBangunBeralasJajarGenjang) {
+                sb.append("\n---------------------------------------------\n");
+                sb.append("Memproses objek dari kelas: ").append(bangun.getClass().getSimpleName()).append("\n");
+                sb.append("Luas Alasnya adalah: ").append(String.format("%.2f", bangun.hitungLuas())).append("\n");
+
+                if (bangun instanceof LimasJajarGenjang) {
+                    LimasJajarGenjang limas = (LimasJajarGenjang) bangun;
+                    sb.append(">> Tipe Khusus: Limas, dengan Volume: ").append(String.format("%.2f", limas.hitungVolume())).append("\n");
+                } else if (bangun instanceof PrismaJajarGenjang) {
+                    PrismaJajarGenjang prisma = (PrismaJajarGenjang) bangun;
+                    sb.append(">> Tipe Khusus: Prisma, dengan Volume: ").append(String.format("%.2f", prisma.hitungVolume())).append("\n");
+                } else {
+                    sb.append(">> Tipe Khusus: Bangun Datar Jajar Genjang (tidak punya volume).\n");
+                }
+            }
+
+            sb.append("\n=============================================\n");
+            sb.append("====== DEMO POLIMORFISME SELESAI ======\n");
+            sb.append("=============================================\n");
+
+        } catch (TolakNilaiException e) {
+            sb.append("\n\nERROR: Terjadi error saat membuat objek untuk demo: ").append(e.getMessage());
+        }
+
+        return sb.toString();
+    }
+    // <<< SELESAI DITAMBAHKAN
+
     private void showMultithreadingSimulation() {
-        // Membuat frame baru untuk output
+        // ... (KODE MULTITHREADING TIDAK BERUBAH) ...
         JFrame simulationFrame = new JFrame("Output Simulasi Multithreading");
         JTextArea outputArea = new JTextArea(25, 60);
         outputArea.setEditable(false);
@@ -200,51 +294,40 @@ public class GeometriGUI extends JFrame{
         simulationFrame.setLocationRelativeTo(this);
         simulationFrame.setVisible(true);
 
-        // Tombol untuk menjalankan kembali simulasi
         JButton runButton = new JButton("Jalankan Ulang Simulasi");
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(runButton);
         simulationFrame.add(bottomPanel, BorderLayout.SOUTH);
 
-        // Aksi untuk tombol
         runButton.addActionListener(e -> {
-            outputArea.setText(""); // Bersihkan output sebelumnya
+            outputArea.setText("");
             runTasks(outputArea, runButton);
         });
 
-        // Langsung jalankan saat pertama kali dibuka
         runTasks(outputArea, runButton);
     }
 
-    /**
-     * Menjalankan task-task geometri dalam thread terpisah.
-     * @param outputArea JTextArea untuk menampilkan output.
-     * @param runButton Tombol untuk di-disable/enable.
-     */
     private void runTasks(JTextArea outputArea, JButton runButton) {
+        // ... (KODE MULTITHREADING TIDAK BERUBAH) ...
         runButton.setEnabled(false);
         runButton.setText("Menjalankan...");
 
-        // Mengalihkan System.out ke JTextArea
         PrintStream originalOut = System.out;
         PrintStream originalErr = System.err;
         PrintStream customPrintStream = new PrintStream(new CustomOutputStream(outputArea));
         System.setOut(customPrintStream);
         System.setErr(customPrintStream);
 
-        // Membuat thread pool
         ExecutorService executor = Executors.newFixedThreadPool(5);
 
-        // Membuat objek-objek dengan nilai statis untuk simulasi
         try {
             Lingkaran task1 = new Lingkaran(10);
             Persegi task2 = new Persegi(15);
             JuringLingkaran task3 = new JuringLingkaran(20);
-            task3.sudutBusurDerajat = 90; // Atur properti spesifik
-            TemberengLingkaran task4 = new TemberengLingkaran(25, 120); // jariJari, sudutPusat
+            task3.sudutBusurDerajat = 90;
+            TemberengLingkaran task4 = new TemberengLingkaran(25, 120);
             Bola task5 = new Bola(30);
 
-            // Menjalankan semua task
             executor.submit(task1);
             executor.submit(task2);
             executor.submit(task3);
@@ -257,18 +340,15 @@ public class GeometriGUI extends JFrame{
 
         executor.shutdown();
 
-        // Thread terpisah untuk menunggu task selesai dan mengembalikan System.out
         new Thread(() -> {
             try {
                 executor.awaitTermination(30, TimeUnit.SECONDS);
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
             } finally {
-                // Kembalikan System.out dan System.err ke konsol asli
                 System.setOut(originalOut);
                 System.setErr(originalErr);
 
-                // Update GUI di Event Dispatch Thread
                 SwingUtilities.invokeLater(() -> {
                     outputArea.append("\n--- SEMUA PROSES SELESAI ---\n");
                     runButton.setEnabled(true);
@@ -278,10 +358,8 @@ public class GeometriGUI extends JFrame{
         }).start();
     }
 
-    /**
-     * Kelas inner untuk mengalihkan output stream ke JTextArea.
-     */
     public static class CustomOutputStream extends OutputStream {
+        // ... (KODE KELAS INI TIDAK BERUBAH) ...
         private JTextArea textArea;
 
         public CustomOutputStream(JTextArea textArea) {
@@ -290,17 +368,15 @@ public class GeometriGUI extends JFrame{
 
         @Override
         public void write(int b) {
-            // Ubah byte menjadi string dan tambahkan ke JTextArea
-            // Pastikan pembaruan GUI dilakukan di Event Dispatch Thread (EDT)
             SwingUtilities.invokeLater(() -> {
                 textArea.append(String.valueOf((char) b));
-                // Auto-scroll ke bawah
                 textArea.setCaretPosition(textArea.getDocument().getLength());
             });
         }
     }
 
     private void showPanel(Object obj, java.util.function.Consumer<JPanel> contentCreator) {
+        // ... (KODE METHOD INI TIDAK BERUBAH) ...
         mainContentPanel.removeAll();
 
         JPanel detailsPanel = new JPanel();
@@ -323,14 +399,16 @@ public class GeometriGUI extends JFrame{
         mainContentPanel.revalidate();
         mainContentPanel.repaint();
     }
-    
+
     private JLabel createAlignedLabel(String text) {
+        // ... (KODE METHOD INI TIDAK BERUBAH) ...
         JLabel label = new JLabel(text);
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         return label;
     }
 
     private JPanel createInputPanel(String labelText, JTextField textField, JButton button, JLabel statusLabel) {
+        // ... (KODE METHOD INI TIDAK BERUBAH) ...
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         panel.setAlignmentX(Component.LEFT_ALIGNMENT);
         textField.setPreferredSize(new Dimension(100, 25));
@@ -345,18 +423,15 @@ public class GeometriGUI extends JFrame{
         }
         return panel;
     }
-    
-    // --- Panel Creator Methods ---
-    
-    // ** Metode di bawah ini diubah untuk menangani TolakNilaiException di dalam, bukan melemparnya **
 
+    // --- Panel Creator Methods ---
+    // ... (SEMUA KODE PANEL DETAILS TIDAK BERUBAH) ...
     private void createLingkaranDetailsPanel(JPanel panel) {
         Lingkaran lingkaran = dataManager.getLingkaran();
 
         panel.add(new JLabel("--- Lingkaran ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // PERUBAHAN: try-catch di sini dihapus karena hitungLuas() dan hitungKeliling() tidak lagi throw exception
         panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", lingkaran.jariJari)));
         panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", lingkaran.hitungLuas())));
         panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", lingkaran.hitungKeliling())));
@@ -369,24 +444,17 @@ public class GeometriGUI extends JFrame{
         JPanel inputControlPanel = createInputPanel("Jari-Jari Baru Lingkaran:", inputJariJari, btnUpdateJariJari, null);
         panel.add(inputControlPanel);
 
-        // ... (Sisa implementasi tombol dan event listener tidak perlu diubah secara signifikan)
-        // ... (Bagian "Hitung Sementara" sudah benar karena menggunakan try-catch untuk metode overloading)
-
         btnUpdateJariJari.addActionListener(e -> {
             try {
                 double newJariJari = Double.parseDouble(inputJariJari.getText());
-                // Di sini kita memanggil updater di DataManager yang mungkin menggunakan constructor baru
-                // atau langsung set field. Asumsi updater sudah benar.
                 dataManager.updateLingkaranChildrenJariJari(newJariJari);
                 hasilUpdate.setText("Status: Jari-jari berhasil diperbarui.");
                 showPanel(dataManager.getLingkaran(), this::createLingkaranDetailsPanel);
             } catch (Exception ex) {
-                // Menangkap NumberFormatException atau error lain dari updater
                 hasilUpdate.setText("Error: " + ex.getMessage());
             }
         });
 
-        // Bagian "Hitung Sementara" TIDAK BERUBAH karena memanggil metode overload yang masih throw exception
         JTextField inputJariJariTemp = new JTextField(10);
         JButton btnHitungTemp = new JButton("Hitung Luas/Keliling (Jari-jari Sementara)");
         JLabel hasilTemp = createAlignedLabel("Hasil Sementara: ");
@@ -398,7 +466,6 @@ public class GeometriGUI extends JFrame{
         btnHitungTemp.addActionListener(e -> {
             try {
                 double tempJariJari = Double.parseDouble(inputJariJariTemp.getText());
-                // Panggilan ini ke metode overload, jadi try-catch tetap diperlukan
                 double luasTemp = lingkaran.hitungLuas(tempJariJari);
                 double kelilingTemp = lingkaran.hitungKeliling(tempJariJari);
                 hasilTemp.setText("Hasil Sementara: Luas=" + String.format("%.2f", luasTemp) +
@@ -415,7 +482,6 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("--- Bola ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // PERUBAHAN: try-catch di sini juga dihapus
         panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", bola.jariJari)));
         panel.add(createAlignedLabel("Volume: " + String.format("%.2f", bola.hitungVolume())));
         panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", bola.hitungLuasPermukaan())));
@@ -451,20 +517,20 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createCincinBolaDetailsPanel(JPanel panel) {
         CincinBola cincinBola = dataManager.getCincinBola();
         panel.add(new JLabel("<html><h2>--- Cincin Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
 
-            panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", cincinBola.jariJari)));
-            panel.add(createAlignedLabel("Tinggi Cincin: " + String.format("%.2f", cincinBola.tinggiCincin)));
-            panel.add(createAlignedLabel("Jari-Jari Alas 1: " + String.format("%.2f", cincinBola.jariJariAlas1)));
-            panel.add(createAlignedLabel("Jari-Jari Alas 2: " + String.format("%.2f", cincinBola.jariJariAlas2)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", cincinBola.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", cincinBola.hitungLuasPermukaanLengkung())));
-            panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", cincinBola.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", cincinBola.jariJari)));
+        panel.add(createAlignedLabel("Tinggi Cincin: " + String.format("%.2f", cincinBola.tinggiCincin)));
+        panel.add(createAlignedLabel("Jari-Jari Alas 1: " + String.format("%.2f", cincinBola.jariJariAlas1)));
+        panel.add(createAlignedLabel("Jari-Jari Alas 2: " + String.format("%.2f", cincinBola.jariJariAlas2)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", cincinBola.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", cincinBola.hitungLuasPermukaanLengkung())));
+        panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", cincinBola.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -485,7 +551,7 @@ public class GeometriGUI extends JFrame{
         inputGrid.add(new JLabel("Jari-Jari Alas 1:")); inputGrid.add(inputJariJariAlas1);
         inputGrid.add(new JLabel("Jari-Jari Alas 2:")); inputGrid.add(inputJariJariAlas2);
         panel.add(inputGrid);
-        
+
         JButton btnUpdateCincinBola = new JButton("Perbarui Dimensi");
         btnUpdateCincinBola.setAlignmentX(Component.LEFT_ALIGNMENT);
         panel.add(btnUpdateCincinBola);
@@ -513,18 +579,18 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Juring Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", juringBola.jariJari)));
-            panel.add(createAlignedLabel("Tinggi Tembereng Dasar: " + String.format("%.2f", juringBola.tinggiTemberengDasar)));
-            panel.add(createAlignedLabel("Jari-Jari Alas Tembereng: " + String.format("%.2f", juringBola.hitungJariJariAlasTembereng())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", juringBola.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", juringBola.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", juringBola.jariJari)));
+        panel.add(createAlignedLabel("Tinggi Tembereng Dasar: " + String.format("%.2f", juringBola.tinggiTemberengDasar)));
+        panel.add(createAlignedLabel("Jari-Jari Alas Tembereng: " + String.format("%.2f", juringBola.hitungJariJariAlasTembereng())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", juringBola.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", juringBola.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiTemberengDasar = new JTextField(String.valueOf(juringBola.tinggiTemberengDasar), 10);
         JButton btnUpdateJuringBola = new JButton("Perbarui Tinggi");
         JLabel statusJuringBola = createAlignedLabel("Status: ");
-        
+
         JPanel inputControlPanel = createInputPanel("Tinggi Tembereng Dasar Baru:", inputTinggiTemberengDasar, btnUpdateJuringBola, null);
         panel.add(inputControlPanel);
         panel.add(statusJuringBola);
@@ -539,25 +605,25 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createTemberengBolaDetailsPanel(JPanel panel) {
         TemberengBola temberengBola = dataManager.getTemberengBola();
         panel.add(new JLabel("<html><h2>--- Tembereng Bola ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", temberengBola.jariJari)));
-            panel.add(createAlignedLabel("Tinggi Tembereng: " + String.format("%.2f", temberengBola.getTinggiTembereng())));
-            panel.add(createAlignedLabel("Jari-Jari Alas: " + String.format("%.2f", temberengBola.hitungJariJariAlas())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", temberengBola.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", temberengBola.hitungLuasPermukaanLengkung())));
-            panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", temberengBola.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari Bola (Diwarisi): " + String.format("%.2f", temberengBola.jariJari)));
+        panel.add(createAlignedLabel("Tinggi Tembereng: " + String.format("%.2f", temberengBola.getTinggiTembereng())));
+        panel.add(createAlignedLabel("Jari-Jari Alas: " + String.format("%.2f", temberengBola.hitungJariJariAlas())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", temberengBola.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan Lengkung: " + String.format("%.2f", temberengBola.hitungLuasPermukaanLengkung())));
+        panel.add(createAlignedLabel("Luas Permukaan Total: " + String.format("%.2f", temberengBola.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiTembereng = new JTextField(String.valueOf(temberengBola.getTinggiTembereng()), 10);
         JButton btnUpdateTemberengBola = new JButton("Perbarui Tinggi");
         JLabel statusTemberengBola = createAlignedLabel("Status: ");
-        
+
         JPanel inputControlPanel = createInputPanel("Tinggi Tembereng Baru:", inputTinggiTembereng, btnUpdateTemberengBola, null);
         panel.add(inputControlPanel);
         panel.add(statusTemberengBola);
@@ -572,23 +638,23 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createJuringLingkaranDetailsPanel(JPanel panel) {
         JuringLingkaran juringLingkaran = dataManager.getJuringLingkaran();
         panel.add(new JLabel("<html><h2>--- Juring Lingkaran ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", juringLingkaran.jariJari)));
-            panel.add(createAlignedLabel("Sudut Busur (Derajat): " + String.format("%.2f", juringLingkaran.sudutBusurDerajat)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", juringLingkaran.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", juringLingkaran.hitungKeliling())));
+        panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", juringLingkaran.jariJari)));
+        panel.add(createAlignedLabel("Sudut Busur (Derajat): " + String.format("%.2f", juringLingkaran.sudutBusurDerajat)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", juringLingkaran.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", juringLingkaran.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputSudutBusur = new JTextField(String.valueOf(juringLingkaran.sudutBusurDerajat), 10);
         JButton btnUpdateSudut = new JButton("Perbarui Sudut Busur");
         JLabel statusSudut = createAlignedLabel("Status: ");
-        
+
         JPanel inputControlPanel = createInputPanel("Sudut Busur Baru (Derajat):", inputSudutBusur, btnUpdateSudut, null);
         panel.add(inputControlPanel);
         panel.add(statusSudut);
@@ -606,23 +672,23 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createTemberengLingkaranDetailsPanel(JPanel panel) {
         TemberengLingkaran temberengLingkaran = dataManager.getTemberengLingkaran();
         panel.add(new JLabel("<html><h2>--- Tembereng Lingkaran ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", temberengLingkaran.jariJari)));
-            panel.add(createAlignedLabel("Sudut Pusat (Derajat): " + String.format("%.2f", temberengLingkaran.getSudutPusatDerajat())));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", temberengLingkaran.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", temberengLingkaran.hitungKeliling())));
+        panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", temberengLingkaran.jariJari)));
+        panel.add(createAlignedLabel("Sudut Pusat (Derajat): " + String.format("%.2f", temberengLingkaran.getSudutPusatDerajat())));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", temberengLingkaran.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", temberengLingkaran.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputSudutPusat = new JTextField(String.valueOf(temberengLingkaran.getSudutPusatDerajat()), 10);
         JButton btnUpdateSudut = new JButton("Perbarui Sudut Pusat");
         JLabel statusSudut = createAlignedLabel("Status: ");
-        
+
         JPanel inputControlPanel = createInputPanel("Sudut Pusat Baru (Derajat):", inputSudutPusat, btnUpdateSudut, null);
         panel.add(inputControlPanel);
         panel.add(statusSudut);
@@ -646,18 +712,18 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Tabung ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", tabung.jariJari)));
-            panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", tabung.getTinggi())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", tabung.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", tabung.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari (Saat Ini): " + String.format("%.2f", tabung.jariJari)));
+        panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", tabung.getTinggi())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", tabung.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", tabung.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputJariJari = new JTextField(String.valueOf(tabung.jariJari), 10);
         JTextField inputTinggi = new JTextField(String.valueOf(tabung.getTinggi()), 10);
         JButton btnUpdate = new JButton("Perbarui Dimensi");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Jari-Jari Baru:", inputJariJari, null, null));
         panel.add(createInputPanel("Tinggi Baru:", inputTinggi, null, null));
         panel.add(btnUpdate);
@@ -680,24 +746,24 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Kerucut ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", kerucut.jariJari)));
-            panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", kerucut.tinggi)));
-            panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kerucut.getGarisPelukis())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kerucut.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kerucut.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari (Diwarisi): " + String.format("%.2f", kerucut.jariJari)));
+        panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", kerucut.tinggi)));
+        panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kerucut.getGarisPelukis())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kerucut.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kerucut.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputJariJari = new JTextField(String.valueOf(kerucut.jariJari), 10);
         JTextField inputTinggi = new JTextField(String.valueOf(kerucut.tinggi), 10);
         JButton btnUpdate = new JButton("Perbarui Dimensi");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Jari-Jari Baru:", inputJariJari, null, null));
         panel.add(createInputPanel("Tinggi Baru:", inputTinggi, null, null));
         panel.add(btnUpdate);
         panel.add(status);
-        
+
         btnUpdate.addActionListener(e -> {
             try {
                 double newJariJari = Double.parseDouble(inputJariJari.getText());
@@ -709,21 +775,21 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createKerucutTerpancungDetailsPanel(JPanel panel) {
         KerucutTerpancung kt = dataManager.getKerucutTerpancung();
         panel.add(new JLabel("<html><h2>--- Kerucut Terpancung ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Jari-Jari Bawah: " + String.format("%.2f", kt.jariJari)));
-            panel.add(createAlignedLabel("Jari-Jari Atas: " + String.format("%.2f", kt.jariJariAtas)));
-            panel.add(createAlignedLabel("Tinggi Frustum: " + String.format("%.2f", kt.tinggiFrustum)));
-            panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kt.hitungGarisPelukis())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kt.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kt.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Jari-Jari Bawah: " + String.format("%.2f", kt.jariJari)));
+        panel.add(createAlignedLabel("Jari-Jari Atas: " + String.format("%.2f", kt.jariJariAtas)));
+        panel.add(createAlignedLabel("Tinggi Frustum: " + String.format("%.2f", kt.tinggiFrustum)));
+        panel.add(createAlignedLabel("Garis Pelukis: " + String.format("%.2f", kt.hitungGarisPelukis())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", kt.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", kt.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputJRB = new JTextField(String.valueOf(kt.jariJari), 10);
         JTextField inputJRA = new JTextField(String.valueOf(kt.jariJariAtas), 10);
         JTextField inputTF = new JTextField(String.valueOf(kt.tinggiFrustum), 10);
@@ -755,17 +821,16 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("--- Persegi ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-        // PERUBAHAN: try-catch dihapus
         panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", persegi.sisi)));
         panel.add(createAlignedLabel("Luas (Saat Ini): " + String.format("%.2f", persegi.hitungLuas())));
         panel.add(createAlignedLabel("Keliling (Saat Ini): " + String.format("%.2f", persegi.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputSisi = new JTextField(String.valueOf(persegi.sisi), 10);
         JButton btnUpdateSisi = new JButton("Terapkan Sisi");
         JLabel hasilUpdate = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Sisi Baru:", inputSisi, btnUpdateSisi, null));
         panel.add(hasilUpdate);
 
@@ -779,26 +844,26 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createLimasPersegiDetailsPanel(JPanel panel) {
         LimasPersegi limasPersegi = dataManager.getLimasPersegi();
         panel.add(new JLabel("<html><h2>--- Limas Persegi ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Sisi Alas (Diwarisi): " + String.format("%.2f", limasPersegi.sisi)));
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", limasPersegi.getTinggiLimas())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", limasPersegi.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", limasPersegi.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Sisi Alas (Diwarisi): " + String.format("%.2f", limasPersegi.sisi)));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", limasPersegi.getTinggiLimas())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", limasPersegi.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", limasPersegi.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputTinggiLimas = new JTextField(String.valueOf(limasPersegi.getTinggiLimas()), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Limas");
         JLabel status = createAlignedLabel("Status: ");
 
         panel.add(createInputPanel("Tinggi Limas Baru:", inputTinggiLimas, btnUpdateTinggi, null));
         panel.add(status);
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggiLimas = Double.parseDouble(inputTinggiLimas.getText());
@@ -809,46 +874,42 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createPrismaPersegiDetailsPanel(JPanel panel) {
         PrismaPersegi prismaPersegi = dataManager.getPrismaPersegi();
         panel.add(new JLabel("<html><h2>--- Prisma Persegi (Kubus) ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", prismaPersegi.sisi)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", prismaPersegi.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", prismaPersegi.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Sisi (Saat Ini): " + String.format("%.2f", prismaPersegi.sisi)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", prismaPersegi.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", prismaPersegi.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Untuk memperbarui sisi kubus, gunakan menu 'Persegi (Dasar)'.</i></html>"));
     }
-
-    // Metode untuk Poligon lainnya (Persegi Panjang, Segitiga, etc.) akan mengikuti pola yang sama
-    // Setiap metode akan diubah untuk menangani TolakNilaiException secara internal.
-    // Di bawah ini adalah contoh lanjutan untuk Persegi Panjang.
 
     private void createPersegiPanjangDetailsPanel(JPanel panel) {
         PersegiPanjang pp = dataManager.getPersegiPanjang();
         panel.add(new JLabel("<html><h2>--- Persegi Panjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-             panel.add(createAlignedLabel("Panjang: " + String.format("%.2f", pp.panjang)));
-             panel.add(createAlignedLabel("Lebar: " + String.format("%.2f", pp.lebar)));
-             panel.add(createAlignedLabel("Luas: " + String.format("%.2f", pp.hitungLuas())));
-             panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", pp.hitungKeliling())));
+        panel.add(createAlignedLabel("Panjang: " + String.format("%.2f", pp.panjang)));
+        panel.add(createAlignedLabel("Lebar: " + String.format("%.2f", pp.lebar)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", pp.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", pp.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputPanjang = new JTextField(String.valueOf(pp.panjang), 10);
         JTextField inputLebar = new JTextField(String.valueOf(pp.lebar), 10);
         JButton btnUpdate = new JButton("Perbarui Dimensi");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Panjang Baru:", inputPanjang, null, null));
         panel.add(createInputPanel("Lebar Baru:", inputLebar, null, null));
         panel.add(btnUpdate);
         panel.add(status);
-        
+
         btnUpdate.addActionListener(e -> {
             try {
                 double newPanjang = Double.parseDouble(inputPanjang.getText());
@@ -866,14 +927,14 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Limas Persegi Panjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Panjang Alas (Diwarisi): " + String.format("%.2f", lpp.panjang)));
-            panel.add(createAlignedLabel("Lebar Alas (Diwarisi): " + String.format("%.2f", lpp.lebar)));
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lpp.tinggiLimas)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lpp.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lpp.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Panjang Alas (Diwarisi): " + String.format("%.2f", lpp.panjang)));
+        panel.add(createAlignedLabel("Lebar Alas (Diwarisi): " + String.format("%.2f", lpp.lebar)));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lpp.tinggiLimas)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lpp.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lpp.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lpp.tinggiLimas), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Limas");
         JLabel status = createAlignedLabel("Status: ");
@@ -897,21 +958,21 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Prisma Persegi Panjang (Balok) ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Panjang Alas: " + String.format("%.2f", ppp.panjang)));
-            panel.add(createAlignedLabel("Lebar Alas: " + String.format("%.2f", ppp.lebar)));
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ppp.tinggiPrisma)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ppp.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ppp.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Panjang Alas: " + String.format("%.2f", ppp.panjang)));
+        panel.add(createAlignedLabel("Lebar Alas: " + String.format("%.2f", ppp.lebar)));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ppp.tinggiPrisma)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ppp.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ppp.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(ppp.tinggiPrisma), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Prisma");
         JLabel status = createAlignedLabel("Status: ");
 
         panel.add(createInputPanel("Tinggi Prisma Baru:", inputTinggiPrisma, btnUpdateTinggi, null));
         panel.add(status);
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggiPrisma = Double.parseDouble(inputTinggiPrisma.getText());
@@ -922,22 +983,22 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createSegitigaDetailsPanel(JPanel panel) {
         Segitiga s = dataManager.getSegitiga();
         panel.add(new JLabel("<html><h2>--- Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Alas (u/ Luas): " + String.format("%.2f", s.alasUntukLuas)));
-            panel.add(createAlignedLabel("Tinggi (u/ Luas): " + String.format("%.2f", s.tinggiUntukLuas)));
-            panel.add(createAlignedLabel("Sisi A: " + String.format("%.2f", s.sisiA)));
-            panel.add(createAlignedLabel("Sisi B: " + String.format("%.2f", s.sisiB)));
-            panel.add(createAlignedLabel("Sisi C: " + String.format("%.2f", s.sisiC)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", s.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", s.hitungKeliling())));
+        panel.add(createAlignedLabel("Alas (u/ Luas): " + String.format("%.2f", s.alasUntukLuas)));
+        panel.add(createAlignedLabel("Tinggi (u/ Luas): " + String.format("%.2f", s.tinggiUntukLuas)));
+        panel.add(createAlignedLabel("Sisi A: " + String.format("%.2f", s.sisiA)));
+        panel.add(createAlignedLabel("Sisi B: " + String.format("%.2f", s.sisiB)));
+        panel.add(createAlignedLabel("Sisi C: " + String.format("%.2f", s.sisiC)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", s.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", s.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputAlas = new JTextField(String.valueOf(s.alasUntukLuas), 10);
         JTextField inputTinggiLuas = new JTextField(String.valueOf(s.tinggiUntukLuas), 10);
         JTextField inputSisiA = new JTextField(String.valueOf(s.sisiA), 10);
@@ -953,7 +1014,7 @@ public class GeometriGUI extends JFrame{
         panel.add(createInputPanel("Sisi C:", inputSisiC, null, null));
         panel.add(btnUpdate);
         panel.add(status);
-        
+
         btnUpdate.addActionListener(e -> {
             try {
                 double newAlas = Double.parseDouble(inputAlas.getText());
@@ -968,15 +1029,15 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
+
     private void createLimasSegitigaDetailsPanel(JPanel panel) {
         LimasSegitiga ls = dataManager.getLimasSegitiga();
         panel.add(new JLabel("<html><h2>--- Limas Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ls.getTinggiLimas())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ls.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ls.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ls.getTinggiLimas())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ls.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ls.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Segitiga (Dasar)'.</i></html>"));
@@ -987,26 +1048,24 @@ public class GeometriGUI extends JFrame{
         panel.add(new JLabel("<html><h2>--- Prisma Segitiga ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ps.getTinggiPrisma())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ps.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ps.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", ps.getTinggiPrisma())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ps.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ps.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Segitiga (Dasar)'.</i></html>"));
     }
-    // --- Panel Detail untuk Belah Ketupat ---
-    // --- Panel Detail untuk Belah Ketupat ---
     private void createBelahKetupatDetailsPanel(JPanel panel) {
         BelahKetupat bk = dataManager.getBelahKetupat();
 
         panel.add(new JLabel("--- Belah Ketupat ---"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", bk.diagonal1)));
-            panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", bk.diagonal2)));
-            panel.add(createAlignedLabel("Sisi: " + String.format("%.2f", bk.sisi)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", bk.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", bk.hitungKeliling())));
+        panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", bk.diagonal1)));
+        panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", bk.diagonal2)));
+        panel.add(createAlignedLabel("Sisi: " + String.format("%.2f", bk.sisi)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", bk.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", bk.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -1036,15 +1095,14 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Limas Belah Ketupat ---
     private void createLimasBelahKetupatDetailsPanel(JPanel panel) {
         LimasBelahKetupat lbk = dataManager.getLimasBelahKetupat();
         panel.add(new JLabel("<html><h2>--- Limas Belah Ketupat ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lbk.tinggiLimas)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lbk.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lbk.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lbk.tinggiLimas)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lbk.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lbk.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -1056,7 +1114,7 @@ public class GeometriGUI extends JFrame{
         panel.add(status);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas (diagonal) diatur di 'Belah Ketupat (Dasar)'.</i></html>"));
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggi = Double.parseDouble(inputTinggiLimas.getText());
@@ -1068,15 +1126,14 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Prisma Belah Ketupat ---
     private void createPrismaBelahKetupatDetailsPanel(JPanel panel) {
         PrismaBelahKetupat pbk = dataManager.getPrismaBelahKetupat();
         panel.add(new JLabel("<html><h2>--- Prisma Belah Ketupat ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pbk.tinggiPrisma)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pbk.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pbk.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pbk.tinggiPrisma)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pbk.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pbk.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -1099,33 +1156,32 @@ public class GeometriGUI extends JFrame{
             }
         });
     }
-    
-    // --- Panel Detail untuk Jajar Genjang ---
+
     private void createJajarGenjangDetailsPanel(JPanel panel) {
         JajarGenjang jg = dataManager.getJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Alas: " + String.format("%.2f", jg.alas)));
-            panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", jg.tinggi)));
-            panel.add(createAlignedLabel("Sisi Miring: " + String.format("%.2f", jg.sisiMiring)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", jg.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", jg.hitungKeliling())));
+        panel.add(createAlignedLabel("Alas: " + String.format("%.2f", jg.alas)));
+        panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", jg.tinggi)));
+        panel.add(createAlignedLabel("Sisi Miring: " + String.format("%.2f", jg.sisiMiring)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", jg.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", jg.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputAlas = new JTextField(String.valueOf(jg.alas), 10);
         JTextField inputTinggi = new JTextField(String.valueOf(jg.tinggi), 10);
         JTextField inputSisiMiring = new JTextField(String.valueOf(jg.sisiMiring), 10);
         JButton btnUpdate = new JButton("Perbarui Dimensi");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Alas Baru:", inputAlas, null, null));
         panel.add(createInputPanel("Tinggi Baru:", inputTinggi, null, null));
         panel.add(createInputPanel("Sisi Miring Baru:", inputSisiMiring, null, null));
         panel.add(btnUpdate);
         panel.add(status);
-        
+
         btnUpdate.addActionListener(e -> {
             try {
                 double newAlas = Double.parseDouble(inputAlas.getText());
@@ -1139,15 +1195,14 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Limas Jajar Genjang ---
     private void createLimasJajarGenjangDetailsPanel(JPanel panel) {
         LimasJajarGenjang ljg = dataManager.getLimasJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Limas Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ljg.tinggiLimas)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ljg.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ljg.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", ljg.tinggiLimas)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", ljg.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", ljg.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -1171,15 +1226,14 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Prisma Jajar Genjang ---
     private void createPrismaJajarGenjangDetailsPanel(JPanel panel) {
         PrismaJajarGenjang pjg = dataManager.getPrismaJajarGenjang();
         panel.add(new JLabel("<html><h2>--- Prisma Jajar Genjang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pjg.tinggiPrisma)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pjg.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pjg.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pjg.tinggiPrisma)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pjg.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pjg.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
@@ -1203,21 +1257,20 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Layang-Layang ---
     private void createLayangLayangDetailsPanel(JPanel panel) {
         LayangLayang ll = dataManager.getLayangLayang();
         panel.add(new JLabel("<html><h2>--- Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", ll.diagonal1)));
-            panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", ll.diagonal2)));
-            panel.add(createAlignedLabel("Sisi Pendek: " + String.format("%.2f", ll.sisiPendek)));
-            panel.add(createAlignedLabel("Sisi Panjang: " + String.format("%.2f", ll.sisiPanjang)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", ll.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", ll.hitungKeliling())));
+        panel.add(createAlignedLabel("Diagonal 1: " + String.format("%.2f", ll.diagonal1)));
+        panel.add(createAlignedLabel("Diagonal 2: " + String.format("%.2f", ll.diagonal2)));
+        panel.add(createAlignedLabel("Sisi Pendek: " + String.format("%.2f", ll.sisiPendek)));
+        panel.add(createAlignedLabel("Sisi Panjang: " + String.format("%.2f", ll.sisiPanjang)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", ll.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", ll.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
-        
+
         JTextField inputD1 = new JTextField(String.valueOf(ll.diagonal1), 10);
         JTextField inputD2 = new JTextField(String.valueOf(ll.diagonal2), 10);
         JTextField inputSisiPendek = new JTextField(String.valueOf(ll.sisiPendek), 10);
@@ -1231,14 +1284,13 @@ public class GeometriGUI extends JFrame{
         panel.add(createInputPanel("Sisi Panjang:", inputSisiPanjang, null, null));
         panel.add(btnUpdate);
         panel.add(status);
-        
+
         btnUpdate.addActionListener(e -> {
             try {
                 double newD1 = Double.parseDouble(inputD1.getText());
                 double newD2 = Double.parseDouble(inputD2.getText());
                 double newSisiPendek = Double.parseDouble(inputSisiPendek.getText());
                 double newSisiPanjang = Double.parseDouble(inputSisiPanjang.getText());
-                // Validasi geometris kompleks diabaikan, hanya update nilai.
                 dataManager.updateLayangLayangDimensions(newD1, newD2, newSisiPendek, newSisiPanjang);
                 showPanel(ll, this::createLayangLayangDetailsPanel);
             } catch (Exception ex) {
@@ -1247,27 +1299,26 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Limas Layang-Layang ---
     private void createLimasLayangLayangDetailsPanel(JPanel panel) {
         LimasLayangLayang lll = dataManager.getLimasLayangLayang();
         panel.add(new JLabel("<html><h2>--- Limas Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lll.getTinggiLimas())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lll.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lll.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lll.getTinggiLimas())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lll.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lll.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lll.getTinggiLimas()), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Limas");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Tinggi Limas Baru:", inputTinggiLimas, btnUpdateTinggi, null));
         panel.add(status);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Layang-Layang (Dasar)'.<br>Tinggi sisi tegak diasumsikan tetap.</i></html>"));
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggi = Double.parseDouble(inputTinggiLimas.getText());
@@ -1279,27 +1330,26 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Prisma Layang-Layang ---
     private void createPrismaLayangLayangDetailsPanel(JPanel panel) {
         PrismaLayangLayang pll = dataManager.getPrismaLayangLayang();
         panel.add(new JLabel("<html><h2>--- Prisma Layang-Layang ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pll.tinggiPrisma)));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pll.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pll.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pll.tinggiPrisma)));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pll.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pll.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(pll.tinggiPrisma), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Prisma");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Tinggi Prisma Baru:", inputTinggiPrisma, btnUpdateTinggi, null));
         panel.add(status);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Layang-Layang (Dasar)'.</i></html>"));
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggi = Double.parseDouble(inputTinggiPrisma.getText());
@@ -1311,29 +1361,27 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Trapesium ---
     private void createTrapesiumDetailsPanel(JPanel panel) {
         Trapesium t = dataManager.getTrapesium();
         panel.add(new JLabel("<html><h2>--- Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Sisi Atas: " + String.format("%.2f", t.sisiAtas)));
-            panel.add(createAlignedLabel("Sisi Bawah: " + String.format("%.2f", t.sisiBawah)));
-            panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", t.tinggi)));
-            panel.add(createAlignedLabel("Sisi Kiri: " + String.format("%.2f", t.sisiKiri)));
-            panel.add(createAlignedLabel("Sisi Kanan: " + String.format("%.2f", t.sisiKanan)));
-            panel.add(createAlignedLabel("Luas: " + String.format("%.2f", t.hitungLuas())));
-            panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", t.hitungKeliling())));
+        panel.add(createAlignedLabel("Sisi Atas: " + String.format("%.2f", t.sisiAtas)));
+        panel.add(createAlignedLabel("Sisi Bawah: " + String.format("%.2f", t.sisiBawah)));
+        panel.add(createAlignedLabel("Tinggi: " + String.format("%.2f", t.tinggi)));
+        panel.add(createAlignedLabel("Sisi Kiri: " + String.format("%.2f", t.sisiKiri)));
+        panel.add(createAlignedLabel("Sisi Kanan: " + String.format("%.2f", t.sisiKanan)));
+        panel.add(createAlignedLabel("Luas: " + String.format("%.2f", t.hitungLuas())));
+        panel.add(createAlignedLabel("Keliling: " + String.format("%.2f", t.hitungKeliling())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputSisiAtas = new JTextField(String.valueOf(t.sisiAtas), 10);
         JTextField inputSisiBawah = new JTextField(String.valueOf(t.sisiBawah), 10);
         JTextField inputTinggi = new JTextField(String.valueOf(t.tinggi), 10);
-        // Sisi Kiri dan Kanan biasanya dihitung, tapi kita berikan opsi input.
         JButton btnUpdate = new JButton("Perbarui Dimensi");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Sisi Atas Baru:", inputSisiAtas, null, null));
         panel.add(createInputPanel("Sisi Bawah Baru:", inputSisiBawah, null, null));
         panel.add(createInputPanel("Tinggi Baru:", inputTinggi, null, null));
@@ -1346,7 +1394,6 @@ public class GeometriGUI extends JFrame{
                 double newSisiAtas = Double.parseDouble(inputSisiAtas.getText());
                 double newSisiBawah = Double.parseDouble(inputSisiBawah.getText());
                 double newTinggi = Double.parseDouble(inputTinggi.getText());
-                // Hitung ulang sisi miring
                 double horizontalDiff = Math.abs(newSisiBawah - newSisiAtas) / 2.0;
                 double newSisiMiring = Math.sqrt(Math.pow(horizontalDiff, 2) + Math.pow(newTinggi, 2));
 
@@ -1358,22 +1405,21 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Limas Trapesium ---
     private void createLimasTrapesiumDetailsPanel(JPanel panel) {
         LimasTrapesium lt = dataManager.getLimasTrapesium();
         panel.add(new JLabel("<html><h2>--- Limas Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lt.getTinggiLimas())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lt.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lt.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Limas: " + String.format("%.2f", lt.getTinggiLimas())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", lt.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", lt.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiLimas = new JTextField(String.valueOf(lt.getTinggiLimas()), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Limas");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Tinggi Limas Baru:", inputTinggiLimas, btnUpdateTinggi, null));
         panel.add(status);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
@@ -1390,27 +1436,26 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-    // --- Panel Detail untuk Prisma Trapesium ---
     private void createPrismaTrapesiumDetailsPanel(JPanel panel) {
         PrismaTrapesium pt = dataManager.getPrismaTrapesium();
         panel.add(new JLabel("<html><h2>--- Prisma Trapesium ---</h2></html>"));
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
 
-            panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pt.getTinggiPrisma())));
-            panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pt.hitungVolume())));
-            panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pt.hitungLuasPermukaan())));
+        panel.add(createAlignedLabel("Tinggi Prisma: " + String.format("%.2f", pt.getTinggiPrisma())));
+        panel.add(createAlignedLabel("Volume: " + String.format("%.2f", pt.hitungVolume())));
+        panel.add(createAlignedLabel("Luas Permukaan: " + String.format("%.2f", pt.hitungLuasPermukaan())));
 
         panel.add(Box.createRigidArea(new Dimension(0, 25)));
 
         JTextField inputTinggiPrisma = new JTextField(String.valueOf(pt.getTinggiPrisma()), 10);
         JButton btnUpdateTinggi = new JButton("Perbarui Tinggi Prisma");
         JLabel status = createAlignedLabel("Status: ");
-        
+
         panel.add(createInputPanel("Tinggi Prisma Baru:", inputTinggiPrisma, btnUpdateTinggi, null));
         panel.add(status);
         panel.add(Box.createRigidArea(new Dimension(0, 10)));
         panel.add(createAlignedLabel("<html><i>Dimensi alas diatur di 'Trapesium (Dasar)'.</i></html>"));
-        
+
         btnUpdateTinggi.addActionListener(e -> {
             try {
                 double newTinggi = Double.parseDouble(inputTinggiPrisma.getText());
@@ -1422,7 +1467,8 @@ public class GeometriGUI extends JFrame{
         });
     }
 
-      public static void main(String[] args) {
+    // >>> DIUBAH: Menghapus pemanggilan demo dari main agar tidak jalan otomatis
+    public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> new GeometriGUI().setVisible(true));
     }
 }

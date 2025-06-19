@@ -10,12 +10,12 @@ public interface BangunGeometri {
      * Menghitung luas bangun geometri.
      * @return luas bangun geometri.
      */
-    double hitungLuas() throws TolakNilaiException;
+    double hitungLuas() ;
 
     /**
      * Menghitung keliling bangun geometri.
      *
      * @return
      */
-    double hitungKeliling() throws TolakNilaiException;
+    double hitungKeliling() ;
 }

@@ -91,35 +91,20 @@ public class GeometriDataManager {
         double defaultTinggiJuringBola = 2.0;    // Harus < 2 * defaultJariJariBola
 
         // Inisialisasi objek-objek Lingkaran dan turunannya (non-Bola)
-
             lingkaran = new Lingkaran(defaultJariJari2D);
-
             juringLingkaran = new JuringLingkaran(defaultJariJari2D);
-
             juringLingkaran.sudutBusurDerajat = 90.0;
-
             temberengLingkaran = new TemberengLingkaran(defaultJariJari2D, 3.0); // Tinggi tembereng adalah sudut pusat pada konstruktor Anda
-
             kerucut = new Kerucut(defaultJariJari2D, defaultTinggiKerucut);
-
             tabung = new Tabung(defaultJariJari2D, defaultTinggiTabung);
-
             bola = new Bola(defaultJariJariBola);
-
             cincinBola = new CincinBola(defaultJariJariBola, 10.0, 5.0, 10.0); // Jari-jari bola, tinggi cincin, jari-jari alas 1 & 2
-
             juringBola = new JuringBola(defaultJariJariBola, defaultTinggiJuringBola);
-
             temberengBola = new TemberengBola(defaultJariJariBola, defaultTinggiTemberengBola);
-
             persegi = new Persegi(defaultSisiPersegi);
-
             limasPersegi = new LimasPersegi(defaultSisiPersegi, defaultTinggiLimas);
-
             prismaPersegi = new PrismaPersegi(defaultSisiPersegi); // Kubus (tinggi = sisi)
-
             persegiPanjang = new PersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang);
-
             limasPersegiPanjang = new LimasPersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang, defaultTinggiLimas);
             prismaPersegiPanjang = new PrismaPersegiPanjang(defaultPanjangPersegiPanjang, defaultLebarPersegiPanjang, defaultTinggiPrisma);
             segitiga = new Segitiga(defaultAlasSegitiga, defaultTinggiSegitiga, defaultSisiSegitigaA, defaultSisiSegitigaB, defaultSisiSegitigaC);
@@ -206,7 +191,7 @@ public class GeometriDataManager {
     public KerucutTerpancung getKerucutTerpancung() { return kerucutTerpancung; }
 
 
-    /**
+    /** 
      * Memperbarui jari-jari secara global untuk semua objek turunan Lingkaran (non-Bola).
      * @param newJariJari Nilai jari-jari baru.
      */
